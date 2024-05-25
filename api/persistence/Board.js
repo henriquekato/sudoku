@@ -16,6 +16,4 @@ const Board = bd.define("board", {
   },
 });
 
-Board.belongsTo(Difficulty);
-
 module.exports = Board;
