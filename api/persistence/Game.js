@@ -1,17 +1,17 @@
-const Sequelize = require("sequelize");
-const bd = require("./bd");
+const { DataTypes } = require("sequelize");
+const sequelize = require("./bd");
 const Board = require("./Board");
 const User = require("./User");
 
-const Game = bd.define("game", {
+const Game = sequelize.define("game", {
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
   completionTime: {
-    type: Sequelize.TIME,
+    type: DataTypes.TIME,
     allowNull: false,
     primaryKey: false,
   },

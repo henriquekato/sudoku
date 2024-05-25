@@ -1,20 +1,20 @@
-const Sequelize = require("sequelize");
-const bd = require("./bd");
+const { DataTypes } = require("sequelize");
+const sequelize = require("./db");
 
-const User = bd.define("user", {
+const User = sequelize.define("user", {
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
   name: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     primaryKey: false,
   },
   email: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     primaryKey: false,
     validate: {
@@ -23,7 +23,7 @@ const User = bd.define("user", {
     unique: true,
   },
   password: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     primaryKey: false,
     validate: {

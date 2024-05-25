@@ -1,16 +1,15 @@
-const Sequelize = require("sequelize");
-const bd = require("./bd");
-const Difficulty = require("./Difficulty");
+const { DataTypes } = require("sequelize");
+const sequelize = require("./bd");
 
-const Board = bd.define("board", {
+const Board = sequelize.define("board", {
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
   matrix: {
-    type: Sequelize.JSON,
+    type: DataTypes.JSON,
     allowNull: false,
     primaryKey: false,
   },
