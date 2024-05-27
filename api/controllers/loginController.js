@@ -1,4 +1,5 @@
 const User = require("../persistence/User");
+const sequelize = require("../persistence/db");
 
 const customErrorMessages = {
   name: "O nome não pode estar vazio.",
@@ -8,6 +9,7 @@ const customErrorMessages = {
 
 exports.signUp = async (req, res, next) => {
   try {
+    await sequelize.sync({ force: true });
     await User.create({
       name: req.body.name,
       email: req.body.email,

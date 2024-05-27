@@ -1,5 +1,10 @@
 const express = require("express");
 const router = require("./routes");
+const createDatabase = require("./persistence/createDatabase");
+
+(async () => {
+  await createDatabase();
+})();
 
 const app = express();
 
