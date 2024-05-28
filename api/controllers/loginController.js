@@ -1,11 +1,7 @@
-const User = require("../persistence/User");
-const sequelize = require("../persistence/db");
+const User = require("../models/User");
+const sequelize = require("../db");
 
-const customErrorMessages = {
-  name: "O nome não pode estar vazio.",
-  email: "O endereço de e-mail não é válido.",
-  password: "A senha deve conter pelo menos 4 caracteres",
-};
+const messages = require("../locales/messages")
 
 exports.signUp = async (req, res, next) => {
   try {
@@ -17,13 +13,13 @@ exports.signUp = async (req, res, next) => {
     });
 
     res.status(200).json({
-      message: "Cadastro feito com sucesso",
+      message: messages.sucess.userCreated,
     });
   } catch (error) {
     if (error.name == "SequelizeValidationError") {
       const errorsMessage = [];
       error.errors.forEach((e) => {
-        errorsMessage.push(customErrorMessages[e.path]);
+        errorsMessage.push(messages.errors.validation[e.path]);
       });
 
       res.status(400).json({
@@ -31,10 +27,10 @@ exports.signUp = async (req, res, next) => {
       });
     } else if (error.name == "SequelizeUniqueConstraintError") {
       res.status(409).json({
-        message: "Email já cadastrado, informe outro",
+        message: messages.errors.emailAlreadyInUse,
       });
     } else {
-      res.status(500).json({ message: "Erro interno do servidor" });
+      res.status(500).json({ message: messages.errors.server });
     }
   }
 };
