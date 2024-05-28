@@ -1,7 +1,7 @@
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const jwt = require("jsonwebtoken");
 
+const User = require("../models/User");
 const sequelize = require("../db");
 const messages = require("../locales/messages");
 
@@ -75,7 +75,6 @@ exports.login = async (req, res, next) => {
       token: token,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: messages.errors.server });
   }
 };
@@ -84,7 +83,7 @@ function generateToken(id, name) {
   const privateKey = fs.readFileSync("./keys/private.key", "utf-8");
   const token = jwt.sign({ id, name }, privateKey, {
     algorithm: "RS256",
-    expiresIn: 120,
+    expiresIn: 10800000,
   });
   return token;
 }
