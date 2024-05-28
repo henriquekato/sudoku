@@ -14,7 +14,7 @@ exports.signUp = async (req, res, next) => {
       password: req.body.password,
     });
 
-    res.status(200).json({
+    res.status(201).json({
       message: messages.success.userCreated,
     });
   } catch (error) {

@@ -2,6 +2,9 @@ module.exports = {
   success: {
     userCreated: "Cadastro feito com sucesso",
     login: "Login feito com sucessos",
+    getBoard: "Listagem feita com sucesso",
+    createBoard: "Tabuleiro criado com sucesso",
+    editBoard: "Tabuleiro editado com sucesso",
   },
   errors: {
     server: "Erro interno do servidor",
@@ -17,6 +20,7 @@ module.exports = {
     headerNotFound: "Cabeçalho não informado",
     tokenNotFound: "Token não informado",
     invalidToken: "Token inválido",
-    endpointNotFound: "Endpoint não encontrado"
+    endpointNotFound: "Endpoint não encontrado",
+    boardDoesNotExist: "Tabuleiro com esse id não existe",
   },
 };

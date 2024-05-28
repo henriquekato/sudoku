@@ -2,8 +2,8 @@ const express = require("express");
 require("dotenv").config();
 
 const router = require("./routes");
-const db = require("./db");
 
+const db = require("./db");
 (async () => {
   await db.sync({ force: true });
 })();
