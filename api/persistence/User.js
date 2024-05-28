@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+
 const sequelize = require("./db");
 
 const User = sequelize.define("user", {
@@ -12,6 +13,9 @@ const User = sequelize.define("user", {
     type: DataTypes.STRING,
     allowNull: false,
     primaryKey: false,
+    validate: {
+      notEmpty: true,
+    },
   },
   email: {
     type: DataTypes.STRING,

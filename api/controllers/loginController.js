@@ -9,7 +9,7 @@ const customErrorMessages = {
 
 exports.signUp = async (req, res, next) => {
   try {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
     await User.create({
       name: req.body.name,
       email: req.body.email,

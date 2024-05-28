@@ -1,9 +1,11 @@
 const express = require("express");
+require("dotenv").config();
+
 const router = require("./routes");
-const createDatabase = require("./persistence/createDatabase");
+const db = require("./persistence/db");
 
 (async () => {
-  await createDatabase();
+  await db.sync({ force: true });
 })();
 
 const app = express();
