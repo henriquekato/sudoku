@@ -14,5 +14,9 @@ module.exports = {
       emailAlreadyInUse: "Email já cadastrado, informe outro",
       passwordLength: "A senha deve conter pelo menos 4 caracteres",
     },
+    headerNotFound: "Cabeçalho não informado",
+    tokenNotFound: "Token não informado",
+    invalidToken: "Token inválido",
+    endpointNotFound: "Endpoint não encontrado"
   },
 };

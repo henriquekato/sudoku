@@ -51,25 +51,22 @@ exports.login = async (req, res, next) => {
       errorsMessage.push(messages.errors.passwordNotFound);
     }
     if (errorsMessage.length > 0) {
-      res.status(401).json({
+      return res.status(401).json({
         message: errorsMessage,
       });
-      return;
     }
 
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      res.status(401).json({
+      return res.status(401).json({
         message: messages.errors.login,
       });
-      return;
     }
 
     if (user.password != password) {
-      res.status(401).json({
+      return res.status(401).json({
         message: messages.errors.login,
       });
-      return;
     }
 
     const token = generateToken(user.id, user.name);

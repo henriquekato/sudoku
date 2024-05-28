@@ -7,7 +7,7 @@ Site para jogar sudokus.
 - Express
 - JWT
 - Sequelize
-- MySQL
+- PostgreSQL
 
 # API
 
