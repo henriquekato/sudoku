@@ -5,7 +5,7 @@ const User = require("../models/User");
 const sequelize = require("../db");
 const messages = require("../locales/messages");
 
-exports.new = async (req, res, next) => {
+exports.newSudoku = async (req, res, next) => {
   try {
     await sequelize.sync({ force: false });
 
@@ -31,7 +31,7 @@ exports.new = async (req, res, next) => {
   }
 };
 
-exports.getGameByBoardId = async (req, res, next) => {
+exports.newSudokuByBoardId = async (req, res, next) => {
   try {
     await sequelize.sync({ force: false });
 
@@ -57,7 +57,7 @@ exports.getGameByBoardId = async (req, res, next) => {
   }
 };
 
-exports.validate = async (req, res, next) => {
+exports.sudokuValidation = async (req, res, next) => {
   try {
     await sequelize.sync({ force: false });
 
@@ -109,7 +109,7 @@ exports.completedGames = async (req, res, next) => {
   }
 };
 
-exports.getGameById = async (req, res, next) => {
+exports.completedGameById = async (req, res, next) => {
   try {
     await sequelize.sync({ force: false });
 
@@ -118,18 +118,25 @@ exports.getGameById = async (req, res, next) => {
       return res.status(401).json({ message: messages.errors.invalidId });
     }
 
-    const game = await Game.findByPk(gameId);
+    let game = await Game.findByPk(gameId);
     if (!game) {
       return res
         .status(404)
         .json({ message: messages.errors.gameDoesNotExist });
     }
 
-    if(game.id != res.locals.user.id){
+    if (game.id != res.locals.user.id) {
       return res
         .status(401)
         .json({ message: messages.errors.unauthorizedAccess });
     }
+
+    game = {
+      id: game.id,
+      completionTime: game.completionTime,
+      matrix: game.matrix,
+      boardId: game.boardId,
+    };
 
     res.status(200).json({
       message: messages.success.list,
@@ -140,7 +147,7 @@ exports.getGameById = async (req, res, next) => {
   }
 };
 
-exports.ranking = async (req, res, next) => {
+exports.rankingByBoard = async (req, res, next) => {
   try {
     await sequelize.sync({ force: false });
 

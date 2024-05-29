@@ -11,18 +11,18 @@ const endpointNotFound = require("./middlewares/endpointNotFound");
 router.post("/signup", express.json(), loginController.signUp);
 router.post("/login", express.json(), loginController.login);
 
-router.get("/board/ids", loginRequired, boardController.ids);
+router.get("/board/ids", loginRequired, boardController.getAvailableBoardIds);
 router.get("/board/:id", loginRequired, boardController.getBoardById);
 router.post("/board/create", loginRequired, express.json(), boardController.create);
 router.put("/board/edit/:id", loginRequired, express.json(), boardController.edit);
 router.delete("/board/delete/:id", loginRequired, boardController.delete);
 
-router.get("/game/new", loginRequired, gameController.new);
-router.get("/game/new/:boardId", loginRequired, gameController.getGameByBoardId);
-router.post("/game/validate", loginRequired, express.json(), gameController.validate);
+router.get("/game/new", loginRequired, gameController.newSudoku);
+router.get("/game/new/:boardId", loginRequired, gameController.newSudokuByBoardId);
+router.post("/game/validate", loginRequired, express.json(), gameController.sudokuValidation);
 router.get("/profile", loginRequired, gameController.completedGames);
-router.get("/profile/:gameId", loginRequired, gameController.getGameById);
-router.get("/game/ranking/:boardId", loginRequired, gameController.ranking);
+router.get("/profile/:gameId", loginRequired, gameController.completedGameById);
+router.get("/game/ranking/:boardId", loginRequired, gameController.rankingByBoard);
 
 router.use(endpointNotFound);
 

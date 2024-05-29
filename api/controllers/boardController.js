@@ -2,7 +2,7 @@ const Board = require("../models/Board");
 const sequelize = require("../db");
 const messages = require("../locales/messages");
 
-exports.ids = async (req, res, next) => {
+exports.getAvailableBoardIds = async (req, res, next) => {
   try {
     await sequelize.sync({ force: false });
     const boards = await Board.findAll({ attributes: ["id"] });
