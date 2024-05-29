@@ -17,6 +17,11 @@ const Game = sequelize.define("game", {
     allowNull: false,
     primaryKey: false,
   },
+  matrix: {
+    type: DataTypes.JSON,
+    allowNull: false,
+    primaryKey: false,
+  },
 });
 
 Game.belongsTo(User);

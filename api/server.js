@@ -3,11 +3,6 @@ require("dotenv").config();
 
 const router = require("./routes");
 
-const db = require("./db");
-(async () => {
-  await db.sync({ force: true });
-})();
-
 const app = express();
 
 app.use(router);
