@@ -47,15 +47,27 @@ exports.getBoardById = async (req, res, next) => {
 exports.create = async (req, res, next) => {
   try {
     await sequelize.sync({ force: false });
-    //missing: sudoku validation
-    await Board.create({
+    const board = await Board.build({
       matrix: JSON.stringify(req.body.matrix),
     });
+
+    board.validate();
+
+    const duplicateNumberPositions = board.validateIncompleteSudoku();
+    if (duplicateNumberPositions.length != 0) {
+      return res.status(422).json({
+        message: messages.errors.invalidSudokuGame,
+        duplicateNumberPositions,
+      });
+    }
+
+    await board.save();
+
     res.status(201).json({
       message: messages.success.boardCreated,
     });
   } catch (error) {
-    //missing: sudoku validation error
+    //missing: sudoku validation errors: 400 (validate)
     res.status(500).json({ message: messages.errors.server });
   }
 };
@@ -76,7 +88,20 @@ exports.edit = async (req, res, next) => {
         .json({ message: messages.errors.boardDoesNotExist });
     }
 
-    //missing: sudoku validation
+    const newBoard = await Board.build({
+      matrix: JSON.stringify(req.body.matrix),
+    });
+
+    await newBoard.validate();
+
+    const duplicateNumberPositions = newBoard.validateIncompleteSudoku();
+    if (duplicateNumberPositions.length != 0) {
+      return res.status(422).json({
+        message: messages.errors.invalidSudokuGame,
+        duplicateNumberPositions,
+      });
+    }
+
     await Board.upsert({
       id: req.params.id,
       matrix: JSON.stringify(req.body.matrix),
@@ -86,7 +111,7 @@ exports.edit = async (req, res, next) => {
       message: messages.success.boardEdited,
     });
   } catch (error) {
-    //missing: sudoku validation error
+    //missing: sudoku validation errors: 400 (validate)
     res.status(500).json({ message: messages.errors.server });
   }
 };
