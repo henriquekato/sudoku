@@ -73,20 +73,30 @@ exports.sudokuValidation = async (req, res, next) => {
         .json({ message: messages.errors.boardDoesNotExist });
     }
 
-    //missing: sudoku validation
-
-    await Game.create({
+    const game = await Game.build({
       completionTime: req.body.completionTime,
       userId: res.locals.user.id,
       boardId,
       matrix: JSON.stringify(req.body.matrix),
     });
 
+    await game.validate();
+
+    const duplicateNumberPositions = game.validateCompletedSudoku();
+    if (duplicateNumberPositions.length != 0) {
+      return res.status(422).json({
+        message: messages.errors.incorrectSudokuSolution,
+        duplicateNumberPositions
+      })
+    }
+
+    await game.save();
+
     res.status(201).json({
       message: messages.success.gameCompleted,
     });
   } catch (error) {
-    //missing: sudoku validation errors: 400 and 422
+    //missing: sudoku validation errors: 400 (validate)
     res.status(500).json({ message: messages.errors.server });
   }
 };

@@ -26,5 +26,8 @@ module.exports = {
     boardDoesNotExist: "Esse tabuleiro não existe",
     gameDoesNotExist: "Esse jogo não existe",
     unauthorizedAccess: "Acesso não autorizado",
+    incorrectSudokuSolution: "Sudoku completado incorretamente",
+    invalidSudokuBoard: "Tabuleiro de sudoku inválido: precisa ser 9x9",
+    invalidSudokuGame: "Esse jogo não poderá ser completado: há números duplicados que quebram as regras"
   },
 };
