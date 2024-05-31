@@ -28,6 +28,9 @@ module.exports = {
     unauthorizedAccess: "Acesso não autorizado",
     incorrectSudokuSolution: "Sudoku completado incorretamente",
     invalidSudokuBoard: "Tabuleiro de sudoku inválido: precisa ser 9x9",
-    invalidSudokuGame: "Esse jogo não poderá ser completado: há números duplicados que quebram as regras"
+    invalidSudokuGame:
+      "Esse jogo não poderá ser completado: há números duplicados que quebram as regras",
+    boardHasBeenChanged:
+      "Os números previamente estabelecidos no tabuleiro são fixos e não devem ser modificados",
   },
 };

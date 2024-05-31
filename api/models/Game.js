@@ -1,4 +1,4 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, col } = require("sequelize");
 
 const sequelize = require("../db");
 
@@ -27,56 +27,73 @@ const Game = sequelize.define("game", {
 Game.belongsTo(User);
 Game.belongsTo(Board);
 
-Game.prototype.validateCompletedSudoku = function () {
+Game.prototype.isBoardUnchanged = function (baseMatrix) {
   const matrix = JSON.parse(this.matrix);
-  const duplicateNumberPositions = [];
   for (let i = 0; i < 9; i++) {
-    const repeatedInRow = verifyIfRepeatedInRow(i, matrix);
-    if (repeatedInRow.length !== 0) {
-      for (const position of repeatedInRow) {
-        if (
-          !duplicateNumberPositions.some((pos) =>
-            pos.every((val, index) => val === position[index])
-          )
-        )
-          duplicateNumberPositions.push(position);
-      }
-    }
-    const repeatedInColumn = verifyIfRepeatedInColumn(i, matrix);
-    if (repeatedInColumn.length !== 0) {
-      for (const position of repeatedInColumn) {
-        if (
-          !duplicateNumberPositions.some((pos) =>
-            pos.every((val, index) => val === position[index])
-          )
-        )
-          duplicateNumberPositions.push(position);
-      }
-    }
-    const repeatedInQuadrant = verifyIfRepeatedInQuadrant(i, matrix);
-    if (repeatedInQuadrant.length !== 0) {
-      for (const position of repeatedInQuadrant) {
-        if (
-          !duplicateNumberPositions.some((pos) =>
-            pos.every((val, index) => val === position[index])
-          )
-        )
-          duplicateNumberPositions.push(position);
-      }
+    for (let j = 0; j < 9; j++) {
+      if (baseMatrix[i][j] == 0) continue;
+      if (matrix[i][j] != baseMatrix[i][j]) return false;
     }
   }
-  return duplicateNumberPositions;
+  return true;
 };
 
-function verifyIfRepeatedInRow(row, matrix) {
-  const repeated = [];
+Game.prototype.validateCompletedSudoku = function () {
+  const matrix = JSON.parse(this.matrix);
+  const invalidPositions = [];
+  for (let i = 0; i < 9; i++) {
+    const invalidsInRow = verifyRow(i, matrix);
+    if (invalidsInRow.length !== 0) {
+      for (const position of invalidsInRow) {
+        if (
+          !invalidPositions.some((pos) =>
+            pos.every((val, index) => val === position[index])
+          )
+        )
+          invalidPositions.push(position);
+      }
+    }
+    const invalidsInColumn = verifyColumn(i, matrix);
+    if (invalidsInColumn.length !== 0) {
+      for (const position of invalidsInColumn) {
+        if (
+          !invalidPositions.some((pos) =>
+            pos.every((val, index) => val === position[index])
+          )
+        )
+          invalidPositions.push(position);
+      }
+    }
+    const invalidsInQuadrant = verifyQuadrant(i, matrix);
+    if (invalidsInQuadrant.length !== 0) {
+      for (const position of invalidsInQuadrant) {
+        if (
+          !invalidPositions.some((pos) =>
+            pos.every((val, index) => val === position[index])
+          )
+        )
+          invalidPositions.push(position);
+      }
+    }
+  }
+  return invalidPositions;
+};
+
+function verifyRow(row, matrix) {
+  const invalids = [];
   for (let i = 0; i < 9; i++) {
     let currentPositionPushed = false;
+    if (matrix[row][i] == 0) {
+      invalids.push([row, i]);
+      continue;
+    }
     for (let j = i + 1; j < 9; j++) {
-      if (matrix[row][i] == matrix[row][j]) {
+      if (matrix[row][j] == 0) {
+        invalids.push([row, j]);
+      } else if (matrix[row][i] == matrix[row][j]) {
         const duplicateNumberPosition = [row, j];
         if (
-          repeated.some((position) =>
+          invalids.some((position) =>
             position.every(
               (val, index) => val === duplicateNumberPosition[index]
             )
@@ -85,25 +102,31 @@ function verifyIfRepeatedInRow(row, matrix) {
           continue;
         }
         if (!currentPositionPushed) {
-          repeated.push([row, i]);
+          invalids.push([row, i]);
           currentPositionPushed = !currentPositionPushed;
         }
-        repeated.push(duplicateNumberPosition);
+        invalids.push(duplicateNumberPosition);
       }
     }
   }
-  return repeated;
+  return invalids;
 }
 
-function verifyIfRepeatedInColumn(column, matrix) {
-  const repeated = [];
+function verifyColumn(column, matrix) {
+  const invalids = [];
   for (let i = 0; i < 9; i++) {
+    if (matrix[i][column] == 0) {
+      invalids.push([i, column]);
+      continue;
+    }
     let currentPositionPushed = false;
     for (let j = i + 1; j < 9; j++) {
-      if (matrix[i][column] == matrix[j][column]) {
+      if (matrix[j][column] == 0) {
+        invalids.push([j, column]);
+      } else if (matrix[i][column] == matrix[j][column]) {
         const duplicateNumberPosition = [j, column];
         if (
-          repeated.some((position) =>
+          invalids.some((position) =>
             position.every(
               (val, index) => val === duplicateNumberPosition[index]
             )
@@ -112,29 +135,35 @@ function verifyIfRepeatedInColumn(column, matrix) {
           continue;
         }
         if (!currentPositionPushed) {
-          repeated.push([i, column]);
+          invalids.push([i, column]);
           currentPositionPushed = !currentPositionPushed;
         }
-        repeated.push(duplicateNumberPosition);
+        invalids.push(duplicateNumberPosition);
       }
     }
   }
-  return repeated;
+  return invalids;
 }
 
-function verifyIfRepeatedInQuadrant(quadrant, matrix) {
+function verifyQuadrant(quadrant, matrix) {
   let firstRow = Math.floor(quadrant / 3) * 3;
   let firstColumn = (quadrant * 3) % 9;
-  const repeated = [];
+  const invalids = [];
   for (let i = firstRow; i < firstRow + 3; i++) {
     for (let j = firstColumn; j < firstColumn + 3; j++) {
+      if (matrix[i][j] == 0) {
+        invalids.push([i, j]);
+        continue;
+      }
       let currentPositionPushed = false;
       for (let k = firstRow; k < firstRow + 3; k++) {
         for (let l = firstColumn; l < firstColumn + 3; l++) {
-          if (matrix[i][j] == matrix[k][l] && (i != k || j != l)) {
+          if (matrix[k][l] == 0) {
+            invalids.push([k, l]);
+          } else if (matrix[i][j] == matrix[k][l] && (i != k || j != l)) {
             const duplicateNumberPosition = [k, l];
             if (
-              repeated.some((position) =>
+              invalids.some((position) =>
                 position.every(
                   (val, index) => val === duplicateNumberPosition[index]
                 )
@@ -143,16 +172,16 @@ function verifyIfRepeatedInQuadrant(quadrant, matrix) {
               continue;
             }
             if (!currentPositionPushed) {
-              repeated.push([i, j]);
+              invalids.push([i, j]);
               currentPositionPushed = !currentPositionPushed;
             }
-            repeated.push(duplicateNumberPosition);
+            invalids.push(duplicateNumberPosition);
           }
         }
       }
     }
   }
-  return repeated;
+  return invalids;
 }
 
 module.exports = Game;

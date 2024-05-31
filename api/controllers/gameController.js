@@ -82,12 +82,18 @@ exports.sudokuValidation = async (req, res, next) => {
 
     await game.validate();
 
+    if (!game.isBoardUnchanged(JSON.parse(board.matrix))) {
+      return res
+        .status(400)
+        .json({ message: messages.errors.boardHasBeenChanged });
+    }
+
     const duplicateNumberPositions = game.validateCompletedSudoku();
     if (duplicateNumberPositions.length != 0) {
       return res.status(422).json({
         message: messages.errors.incorrectSudokuSolution,
-        duplicateNumberPositions
-      })
+        duplicateNumberPositions,
+      });
     }
 
     await game.save();
