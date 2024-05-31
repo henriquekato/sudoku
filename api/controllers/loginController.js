@@ -63,7 +63,7 @@ exports.login = async (req, res, next) => {
       });
     }
 
-    if (user.password != password) {
+    if (!user.checkPassword(password)) {
       return res.status(401).json({
         message: messages.errors.login,
       });

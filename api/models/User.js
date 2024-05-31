@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 const sequelize = require("../db");
-const messages = require("../locales/messages")
+const messages = require("../locales/messages");
 
 const User = sequelize.define("user", {
   id: {
@@ -43,5 +43,9 @@ const User = sequelize.define("user", {
     },
   },
 });
+
+User.prototype.checkPassword = function (password) {
+  return this.password == password;
+};
 
 module.exports = User;
