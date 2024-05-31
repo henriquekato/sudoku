@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 const sequelize = require("../db");
+const messages = require("../locales/messages");
 
 const Board = sequelize.define("board", {
   id: {
@@ -13,6 +14,12 @@ const Board = sequelize.define("board", {
     type: DataTypes.JSON,
     allowNull: false,
     primaryKey: false,
+    validate: {
+      is: {
+        args: /^\[\s*(\[(\s*\d\s*,\s*){8}\d\],*\s*){9}\s*\]$/,
+        msg: messages.errors.invalidSudokuBoard,
+      },
+    },
   },
 });
 

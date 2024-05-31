@@ -27,10 +27,12 @@ module.exports = {
     gameDoesNotExist: "Esse jogo não existe",
     unauthorizedAccess: "Acesso não autorizado",
     incorrectSudokuSolution: "Sudoku completado incorretamente",
-    invalidSudokuBoard: "Tabuleiro de sudoku inválido: precisa ser 9x9",
+    invalidSudokuBoard: "Tabuleiro de sudoku inválido: forneça um tabuleiro 9x9",
     invalidSudokuGame:
-      "Esse jogo não poderá ser completado: há números duplicados que quebram as regras",
+      "Esse jogo não poderá ser completado: há números que quebram as regras",
     boardHasBeenChanged:
       "Os números previamente estabelecidos no tabuleiro são fixos e não devem ser modificados",
+    invalidTime: "Tempo inválido",
+    nullCompletionTime: "Informe o tempo de conclusão",
   },
 };

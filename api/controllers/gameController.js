@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+
 const Game = require("../models/Game");
 const Board = require("../models/Board");
 const User = require("../models/User");
@@ -88,11 +89,11 @@ exports.sudokuValidation = async (req, res, next) => {
         .json({ message: messages.errors.boardHasBeenChanged });
     }
 
-    const duplicateNumberPositions = game.validateCompletedSudoku();
-    if (duplicateNumberPositions.length != 0) {
+    const invalidNumberPositions = game.validateCompletedSudoku();
+    if (invalidNumberPositions.length != 0) {
       return res.status(422).json({
         message: messages.errors.incorrectSudokuSolution,
-        duplicateNumberPositions,
+        invalidNumberPositions,
       });
     }
 
@@ -102,7 +103,15 @@ exports.sudokuValidation = async (req, res, next) => {
       message: messages.success.gameCompleted,
     });
   } catch (error) {
-    //missing: sudoku validation errors: 400 (validate)
+    if (error instanceof Sequelize.ValidationError) {
+      return res.status(400).json({
+        message: error.errors[0].message,
+      });
+    } else if (error.name == "SequelizeDatabaseError") {
+      return res.status(400).json({
+        message: messages.errors.invalidTime,
+      });
+    }
     res.status(500).json({ message: messages.errors.server });
   }
 };

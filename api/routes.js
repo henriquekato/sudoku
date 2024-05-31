@@ -11,7 +11,7 @@ const endpointNotFound = require("./middlewares/endpointNotFound");
 router.post("/signup", express.json(), loginController.signUp);
 router.post("/login", express.json(), loginController.login);
 
-router.get("/board/ids", loginRequired, boardController.getAvailableBoardIds);
+router.get("/board/all", loginRequired, boardController.getAvailableBoardIds);
 router.get("/board/:id", loginRequired, boardController.getBoardById);
 router.post("/board/create", loginRequired, express.json(), boardController.create);
 router.put("/board/edit/:id", loginRequired, express.json(), boardController.edit);

@@ -1,3 +1,5 @@
+const Sequelize = require("sequelize");
+
 const Board = require("../models/Board");
 const sequelize = require("../db");
 const messages = require("../locales/messages");
@@ -51,13 +53,13 @@ exports.create = async (req, res, next) => {
       matrix: JSON.stringify(req.body.matrix),
     });
 
-    board.validate();
+    await board.validate();
 
-    const duplicateNumberPositions = board.validateIncompleteSudoku();
-    if (duplicateNumberPositions.length != 0) {
+    const invalidNumberPositions = board.validateIncompleteSudoku();
+    if (invalidNumberPositions.length != 0) {
       return res.status(422).json({
         message: messages.errors.invalidSudokuGame,
-        duplicateNumberPositions,
+        invalidNumberPositions,
       });
     }
 
@@ -67,7 +69,11 @@ exports.create = async (req, res, next) => {
       message: messages.success.boardCreated,
     });
   } catch (error) {
-    //missing: sudoku validation errors: 400 (validate)
+    if (error instanceof Sequelize.ValidationError) {
+      return res.status(400).json({
+        message: messages.errors.invalidSudokuBoard,
+      });
+    }
     res.status(500).json({ message: messages.errors.server });
   }
 };
@@ -94,11 +100,11 @@ exports.edit = async (req, res, next) => {
 
     await newBoard.validate();
 
-    const duplicateNumberPositions = newBoard.validateIncompleteSudoku();
-    if (duplicateNumberPositions.length != 0) {
+    const invalidNumberPositions = newBoard.validateIncompleteSudoku();
+    if (invalidNumberPositions.length != 0) {
       return res.status(422).json({
         message: messages.errors.invalidSudokuGame,
-        duplicateNumberPositions,
+        invalidNumberPositions,
       });
     }
 
@@ -111,7 +117,11 @@ exports.edit = async (req, res, next) => {
       message: messages.success.boardEdited,
     });
   } catch (error) {
-    //missing: sudoku validation errors: 400 (validate)
+    if (error instanceof Sequelize.ValidationError) {
+      return res.status(400).json({
+        message: messages.errors.invalidSudokuBoard,
+      });
+    }
     res.status(500).json({ message: messages.errors.server });
   }
 };

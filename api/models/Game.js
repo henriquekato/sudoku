@@ -1,9 +1,9 @@
-const { DataTypes, col } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 const sequelize = require("../db");
-
 const Board = require("./Board");
 const User = require("./User");
+const messages = require("../locales/messages");
 
 const Game = sequelize.define("game", {
   id: {
@@ -21,6 +21,12 @@ const Game = sequelize.define("game", {
     type: DataTypes.JSON,
     allowNull: false,
     primaryKey: false,
+    validate: {
+      is: {
+        args: /^\[\s*(\[(\s*\d\s*,\s*){8}\d\],*\s*){9}\s*\]$/,
+        msg: messages.errors.invalidSudokuBoard,
+      },
+    },
   },
 });
 
@@ -42,7 +48,7 @@ Game.prototype.validateCompletedSudoku = function () {
   const matrix = JSON.parse(this.matrix);
   const invalidPositions = [];
   for (let i = 0; i < 9; i++) {
-    const invalidsInRow = verifyRow(i, matrix);
+    const invalidsInRow = this.verifyRow(i, matrix);
     if (invalidsInRow.length !== 0) {
       for (const position of invalidsInRow) {
         if (
@@ -53,7 +59,7 @@ Game.prototype.validateCompletedSudoku = function () {
           invalidPositions.push(position);
       }
     }
-    const invalidsInColumn = verifyColumn(i, matrix);
+    const invalidsInColumn = this.verifyColumn(i, matrix);
     if (invalidsInColumn.length !== 0) {
       for (const position of invalidsInColumn) {
         if (
@@ -64,7 +70,7 @@ Game.prototype.validateCompletedSudoku = function () {
           invalidPositions.push(position);
       }
     }
-    const invalidsInQuadrant = verifyQuadrant(i, matrix);
+    const invalidsInQuadrant = this.verifyQuadrant(i, matrix);
     if (invalidsInQuadrant.length !== 0) {
       for (const position of invalidsInQuadrant) {
         if (
@@ -79,7 +85,7 @@ Game.prototype.validateCompletedSudoku = function () {
   return invalidPositions;
 };
 
-function verifyRow(row, matrix) {
+Game.prototype.verifyRow = function (row, matrix) {
   const invalids = [];
   for (let i = 0; i < 9; i++) {
     let currentPositionPushed = false;
@@ -110,9 +116,9 @@ function verifyRow(row, matrix) {
     }
   }
   return invalids;
-}
+};
 
-function verifyColumn(column, matrix) {
+Game.prototype.verifyColumn = function (column, matrix) {
   const invalids = [];
   for (let i = 0; i < 9; i++) {
     if (matrix[i][column] == 0) {
@@ -143,9 +149,9 @@ function verifyColumn(column, matrix) {
     }
   }
   return invalids;
-}
+};
 
-function verifyQuadrant(quadrant, matrix) {
+Game.prototype.verifyQuadrant = function (quadrant, matrix) {
   let firstRow = Math.floor(quadrant / 3) * 3;
   let firstColumn = (quadrant * 3) % 9;
   const invalids = [];
@@ -182,6 +188,6 @@ function verifyQuadrant(quadrant, matrix) {
     }
   }
   return invalids;
-}
+};
 
 module.exports = Game;
