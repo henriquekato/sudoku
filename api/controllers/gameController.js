@@ -104,15 +104,20 @@ exports.sudokuValidation = async (req, res, next) => {
     });
   } catch (error) {
     if (error instanceof Sequelize.ValidationError) {
-      return res.status(400).json({
-        message: error.errors[0].message,
+      const errorsMessage = [];
+      error.errors.forEach((e) => {
+        errorsMessage.push(e.message);
+      });
+      res.status(400).json({
+        message: errorsMessage,
       });
     } else if (error.name == "SequelizeDatabaseError") {
       return res.status(400).json({
         message: messages.errors.invalidTime,
       });
+    } else {
+      res.status(500).json({ message: messages.errors.server });
     }
-    res.status(500).json({ message: messages.errors.server });
   }
 };
 

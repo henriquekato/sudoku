@@ -16,6 +16,11 @@ const Game = sequelize.define("game", {
     type: DataTypes.TIME,
     allowNull: false,
     primaryKey: false,
+    validate: {
+      notNull: {
+        msg: messages.errors.nullCompletionTime,
+      },
+    },
   },
   matrix: {
     type: DataTypes.JSON,
