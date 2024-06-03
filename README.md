@@ -10,9 +10,43 @@ Site para jogar sudokus.
 - Sequelize
 - PostgreSQL
 
+## Cloning
+
+```
+git clone https://github.com/henriquekato/sudoku.git
+```
+
 # API
 
-Disponibiliza e verifica sudokus.
+Disponibiliza e verifica sudokus
+
+## Pré-requisitos
+
+- Nodejs
+- PostgreSQL
+
+## Database .env variables
+
+```
+HOST=localhost
+PORT=5432
+DATABASE=sudoku
+USER=user
+PASSWORD=passsword
+```
+
+## Starting
+
+- Crie a database no PostgreSQL
+- Coloque suas chaves pública ( `public.key` ) e privada ( `private.key` ) em `/api/keys`
+- Instale as dependências da API
+
+  ```
+  cd sudoku/api
+  npm i
+  ```
+
+- Inicie a API: `node server.js`, estará na porta 8000
 
 ## Rotas da API
 
@@ -38,20 +72,21 @@ Todas as "responses" possuem uma chave de mensagem com uma breve descrição do 
 ```
 
 ## Lista dos endpoints
-| Endpoint | Descrição |
-|---|---|
-| POST <kbd>/signup</kbd> | Cadastra um jogador |
-| POST <kbd>/login</kbd> | Autentica um jogador |
-| GET <kbd>/game/new</kbd> | Jogo aleatório de sudoku |
-| GET <kbd>/game/new/{boardId}</kbd> | Jogo de sudoku |
-| POST <kbd>/game/validate</kbd> | Valida sudoku |
-| GET <kbd>/profile</kbd> | Jogos concluídos |
-| GET <kbd>/profile/{gameId}</kbd> | Jogos concluído |
-| GET <kbd>/ranking/{boardId}</kbd> | Ranking de um tabuleiro |
-| GET <kbd>/board/all</kbd> | Tabuleiros cadastrados |
-| POST <kbd>/board/create</kbd> | Cadastra um tabuleiro |
-| PUT <kbd>/board/edit/{boardId}</kbd> | Edita um tabuleiro |
-| DELETE <kbd>/board/delete/{boardId}</kbd> | Deleta um tabuleiro |
+
+| Endpoint                                  | Descrição                |
+| ----------------------------------------- | ------------------------ |
+| POST <kbd>/signup</kbd>                   | Cadastra um jogador      |
+| POST <kbd>/login</kbd>                    | Autentica um jogador     |
+| GET <kbd>/game/new</kbd>                  | Jogo aleatório de sudoku |
+| GET <kbd>/game/new/{boardId}</kbd>        | Jogo de sudoku           |
+| POST <kbd>/game/validate</kbd>            | Valida sudoku            |
+| GET <kbd>/profile</kbd>                   | Jogos concluídos         |
+| GET <kbd>/profile/{gameId}</kbd>          | Jogos concluído          |
+| GET <kbd>/ranking/{boardId}</kbd>         | Ranking de um tabuleiro  |
+| GET <kbd>/board/all</kbd>                 | Tabuleiros cadastrados   |
+| POST <kbd>/board/create</kbd>             | Cadastra um tabuleiro    |
+| PUT <kbd>/board/edit/{boardId}</kbd>      | Edita um tabuleiro       |
+| DELETE <kbd>/board/delete/{boardId}</kbd> | Deleta um tabuleiro      |
 
 ### POST `/signup`
 
