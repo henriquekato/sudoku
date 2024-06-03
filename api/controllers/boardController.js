@@ -20,32 +20,6 @@ exports.getAvailableBoardIds = async (req, res, next) => {
   }
 };
 
-exports.getBoardById = async (req, res, next) => {
-  try {
-    await sequelize.sync({ force: false });
-
-    const id = parseInt(req.params.id);
-    if (!Number.isInteger(id)) {
-      return res.status(401).json({ message: messages.errors.invalidId });
-    }
-
-    const board = await Board.findByPk(id);
-    if (!board) {
-      return res
-        .status(404)
-        .json({ message: messages.errors.boardDoesNotExist });
-    }
-
-    res.status(200).json({
-      message: messages.success.list,
-      id: board.id,
-      board: JSON.parse(board.matrix),
-    });
-  } catch (error) {
-    res.status(500).json({ message: messages.errors.server });
-  }
-};
-
 exports.create = async (req, res, next) => {
   try {
     await sequelize.sync({ force: false });
@@ -84,7 +58,7 @@ exports.edit = async (req, res, next) => {
 
     const id = parseInt(req.params.id);
     if (!Number.isInteger(id)) {
-      return res.status(401).json({ message: messages.errors.invalidId });
+      return res.status(400).json({ message: messages.errors.invalidId });
     }
 
     const board = await Board.findByPk(id);
@@ -132,7 +106,7 @@ exports.delete = async (req, res, next) => {
 
     const id = parseInt(req.params.id);
     if (!Number.isInteger(id)) {
-      return res.status(401).json({ message: messages.errors.invalidId });
+      return res.status(400).json({ message: messages.errors.invalidId });
     }
 
     const board = await Board.destroy({ where: { id } });

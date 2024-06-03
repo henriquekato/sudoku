@@ -38,7 +38,7 @@ exports.newSudokuByBoardId = async (req, res, next) => {
 
     const boardId = parseInt(req.params.boardId);
     if (!Number.isInteger(boardId)) {
-      return res.status(401).json({ message: messages.errors.invalidId });
+      return res.status(400).json({ message: messages.errors.invalidId });
     }
 
     const board = await Board.findByPk(boardId);
@@ -64,7 +64,7 @@ exports.sudokuValidation = async (req, res, next) => {
 
     const boardId = parseInt(req.body.boardId);
     if (!Number.isInteger(boardId)) {
-      return res.status(401).json({ message: messages.errors.invalidId });
+      return res.status(400).json({ message: messages.errors.invalidId });
     }
 
     const board = await Board.findByPk(boardId);
@@ -124,11 +124,14 @@ exports.sudokuValidation = async (req, res, next) => {
 exports.completedGames = async (req, res, next) => {
   try {
     await sequelize.sync({ force: false });
-    const gameIds = await Game.findAll({
+    const games = await Game.findAll({
       attributes: ["id"],
       where: {
         userId: res.locals.user.id,
       },
+    });
+    const gameIds = games.map((ob) => {
+      return ob["id"];
     });
     res.status(200).json({
       message: messages.success.list,
@@ -145,7 +148,7 @@ exports.completedGameById = async (req, res, next) => {
 
     const gameId = parseInt(req.params.gameId);
     if (!Number.isInteger(gameId)) {
-      return res.status(401).json({ message: messages.errors.invalidId });
+      return res.status(400).json({ message: messages.errors.invalidId });
     }
 
     let game = await Game.findByPk(gameId);
@@ -153,12 +156,6 @@ exports.completedGameById = async (req, res, next) => {
       return res
         .status(404)
         .json({ message: messages.errors.gameDoesNotExist });
-    }
-
-    if (game.id != res.locals.user.id) {
-      return res
-        .status(401)
-        .json({ message: messages.errors.unauthorizedAccess });
     }
 
     game = {
@@ -183,7 +180,7 @@ exports.rankingByBoard = async (req, res, next) => {
 
     const boardId = parseInt(req.params.boardId);
     if (!Number.isInteger(boardId)) {
-      return res.status(401).json({ message: messages.errors.invalidId });
+      return res.status(400).json({ message: messages.errors.invalidId });
     }
 
     const board = await Board.findByPk(boardId);
@@ -204,6 +201,7 @@ exports.rankingByBoard = async (req, res, next) => {
       },
       include: [{ model: User, attributes: [] }],
       order: [["completionTime", "ASC"]],
+      limit: 10,
     });
     res.status(200).json({
       message: messages.success.list,
