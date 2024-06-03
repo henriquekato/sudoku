@@ -1,7 +1,7 @@
 module.exports = {
   success: {
     userCreated: "Cadastro feito com sucesso",
-    login: "Login feito com sucessos",
+    login: "Login feito com sucesso",
     list: "Listagem feita com sucesso",
     boardCreated: "Tabuleiro criado com sucesso",
     boardEdited: "Tabuleiro editado com sucesso",

@@ -37,7 +37,7 @@ const User = sequelize.define("user", {
     primaryKey: false,
     validate: {
       len: {
-        args: [4, 10],
+        args: [4, 50],
         msg: messages.errors.validation.passwordLength,
       },
     },
