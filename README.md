@@ -5,6 +5,7 @@ Site para jogar sudokus.
 ## Tecnologias
 
 - Nodejs
+- React
 - Express
 - JWT
 - Sequelize
@@ -54,7 +55,7 @@ PASSWORD=passsword
 
 As requisições POST precisam que o `Content-type` esteja com o valor `application/json`
 
-Todas as rotas precisam do token JWT no header da requisição, exceto as rotas `/signup` e `/login`, no formato:
+Todas as rotas precisam do token JWT no header da requisição, exceto as rotas `/signup` e `/login`, no formato
 
 ```
 Authorization: Bearer `token`
@@ -88,7 +89,7 @@ Todas as "responses" possuem uma chave de mensagem com uma breve descrição do 
 | PUT <kbd>/board/edit/{boardId}</kbd>      | Edita um tabuleiro       |
 | DELETE <kbd>/board/delete/{boardId}</kbd> | Deleta um tabuleiro      |
 
-### POST `/signup`
+### POST /signup
 
 Fazer o cadastro de um jogador
 
@@ -118,7 +119,7 @@ Se pelo menos algum dos campos não passar da validação:
 
 Se o email já tiver sido cadastrado
 
-### POST `/login`
+### POST /login
 
 **REQUEST**
 
@@ -142,7 +143,7 @@ Se o email já tiver sido cadastrado
 
 Se pelo menos algum dos campos não passar da validação: campos faltando, email não cadastrado ou senha incorreta
 
-### GET `/game/new`
+### GET /game/new
 
 Um tabuleiro aleatório para jogar
 
@@ -176,7 +177,7 @@ Quando não há nenhum tabuleiro cadastrado
 
 Se o token for inválido: requisições sem header, requisições sem token, token inválido ou token expirado
 
-### GET `/game/new/{boardId}`
+### GET /game/new/{boardId}
 
 O tabuleiro de ID informado
 
@@ -214,7 +215,7 @@ Se o token for inválido: requisições sem header, requisições sem token, tok
 
 Se o tabuleiro de ID informado não existir
 
-### POST `/game/validate`
+### POST /game/validate
 
 Valida um jogo de sudoku
 
@@ -260,7 +261,7 @@ Se o tabuleiro de ID informado não existir
 
 Solução inválida
 
-### GET `/profile`
+### GET /profile
 
 IDs dos jogos concluídos do jogador
 
@@ -275,7 +276,7 @@ Não é possível que um jogador liste as partidas de outro jogador
 }
 ```
 
-### GET `/profile/{gameId}`
+### GET /profile/{gameId}
 
 Jogo concluído
 
@@ -315,7 +316,7 @@ Se o token for inválido: requisições sem header, requisições sem token, tok
 
 Se o jogo de ID informado não existir
 
-### GET `/game/ranking/{boardId}`
+### GET /game/ranking/{boardId}
 
 Ranking de um tabuleiro, por tempo, dos 10 primeiros colocados
 
@@ -351,7 +352,7 @@ Se o token for inválido: requisições sem header, requisições sem token, tok
 
 Se o tabuleiro de ID informado não existir
 
-### GET `/board/all`
+### GET /board/all
 
 Todos os IDs de tabuleiros cadatrados
 
@@ -368,7 +369,7 @@ Todos os IDs de tabuleiros cadatrados
 
 Se o token for inválido: requisições sem header, requisições sem token, token inválido ou token expirado
 
-### POST `/board/create`
+### POST /board/create
 
 Cadastra um tabuleiro de sudoku
 
@@ -408,7 +409,7 @@ Se o token for inválido: requisições sem header, requisições sem token, tok
 
 Não será possível ter uma solução válida
 
-### PUT `/board/edit/{boardId}`
+### PUT /board/edit/{boardId}
 
 Edita um tabuleiro de sudoku
 
@@ -447,7 +448,7 @@ Se o token for inválido: requisições sem header, requisições sem token, tok
 
 Não será possível ter uma solução válida
 
-### DELETE `/board/delete/{boardId}`
+### DELETE /board/delete/{boardId}
 
 Deleta um tabuleiro de sudoku
 
