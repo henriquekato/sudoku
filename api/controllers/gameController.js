@@ -125,17 +125,14 @@ exports.completedGames = async (req, res, next) => {
   try {
     await sequelize.sync({ force: false });
     const games = await Game.findAll({
-      attributes: ["id"],
+      attributes: ["id", "completionTime", "boardId"],
       where: {
         userId: res.locals.user.id,
       },
     });
-    const gameIds = games.map((ob) => {
-      return ob["id"];
-    });
     res.status(200).json({
       message: messages.success.list,
-      gameIds: gameIds,
+      games: games,
     });
   } catch (error) {
     res.status(500).json({ message: messages.errors.server });

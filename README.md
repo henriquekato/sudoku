@@ -263,7 +263,7 @@ Solução inválida
 
 ### GET /profile
 
-IDs dos jogos concluídos do jogador
+Informações dos jogos concluídos pelo jogador: id do jogo, tempo de conclusão e id do tabuleiro
 
 Não é possível que um jogador liste as partidas de outro jogador
 
@@ -272,7 +272,23 @@ Não é possível que um jogador liste as partidas de outro jogador
 ```
 {
   "message": "Listagem feita com sucesso",
-  "gameIds": [3,5,6,7,9]
+  "gameIds": [
+    {
+      "id": 3,
+      "completionTime": "00:10:00",
+      "boardId": 1
+    },
+    {
+      "id": 4,
+      "completionTime": "00:09:00",
+      "boardId": 2
+    },
+    {
+      "id": 5,
+      "completionTime": "00:05:00",
+      "boardId": 3
+    }
+  ]
 }
 ```
 
@@ -459,3 +475,29 @@ Tabuleiro deletado
 **RESPONSE 401**
 
 Se o token for inválido: requisições sem header, requisições sem token, token inválido ou token expirado
+
+## Tabelas do banco de dados
+
+### Tabela `user`
+
+- `id`: id do usuário (integer, primary key, autoincrement)
+- `name`: nome do usuário (string, not null)
+- `email`: email do usuário (string, not null, unique)
+- `password`: senha do usuário (string, not null)
+
+### Tabela `board`
+
+- `id`: id do tabuleiro (integer, primary key, autoincrement)
+- `matrix`: matriz 9x9 de um tabuleiro incompleto (json, not null)
+
+### Tabela `game`
+
+- `id`: id do jogo (integer, primary key, autoincrement)
+- `completionTime`: tempo de conclusão do jogo (time, not null)
+- `matrix`: matriz após a conclusão do jogo (json, not null)
+- `userId`: usuário que completou o jogo (integer, foreign key)
+- `boardId`: tabuleiro usado (integer, foreign key)
+
+### Notas
+
+- `matrix` precisa ser 9x9, em que o número 0 representa espaços que devem ser preenchidos
