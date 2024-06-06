@@ -82,7 +82,7 @@ Todas as "responses" possuem uma chave de mensagem com uma breve descrição do 
 | GET <kbd>/game/new/{boardId}</kbd>        | Jogo de sudoku           |
 | POST <kbd>/game/validate</kbd>            | Valida sudoku            |
 | GET <kbd>/profile</kbd>                   | Jogos concluídos         |
-| GET <kbd>/profile/{gameId}</kbd>          | Jogos concluído          |
+| GET <kbd>/profile/{gameId}</kbd>          | Jogo concluído           |
 | GET <kbd>/ranking/{boardId}</kbd>         | Ranking de um tabuleiro  |
 | GET <kbd>/board/all</kbd>                 | Tabuleiros cadastrados   |
 | POST <kbd>/board/create</kbd>             | Cadastra um tabuleiro    |
@@ -296,6 +296,8 @@ Não é possível que um jogador liste as partidas de outro jogador
 
 Jogo concluído
 
+Não é possível que um jogador liste a partida de outro jogador
+
 **RESPONSE 200**
 
 ```
@@ -327,6 +329,10 @@ Se o ID não for um inteiro (nessa API os ids são representados por inteiros)
 **RESPONSE 401**
 
 Se o token for inválido: requisições sem header, requisições sem token, token inválido ou token expirado
+
+**RESPONSE 403**
+
+Se a partida for de outro jogador
 
 **RESPONSE 404**
 

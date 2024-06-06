@@ -155,6 +155,12 @@ exports.completedGameById = async (req, res, next) => {
         .json({ message: messages.errors.gameDoesNotExist });
     }
 
+    if (game.userId != res.locals.user.id) {
+      return res
+        .status(403)
+        .json({ message: messages.errors.unauthorizedAccess });
+    }
+
     game = {
       id: game.id,
       completionTime: game.completionTime,
