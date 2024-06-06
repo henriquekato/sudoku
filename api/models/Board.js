@@ -27,7 +27,7 @@ Board.prototype.validateIncompleteSudoku = function () {
   const matrix = JSON.parse(this.matrix);
   const duplicateNumberPositions = [];
   for (let i = 0; i < 9; i++) {
-    const repeatedInRow = verifyIfRepeatedInRow(i, matrix);
+    const repeatedInRow = this.verifyIfRepeatedInRow(i, matrix);
     if (repeatedInRow.length !== 0) {
       for (const position of repeatedInRow) {
         if (
@@ -38,7 +38,7 @@ Board.prototype.validateIncompleteSudoku = function () {
           duplicateNumberPositions.push(position);
       }
     }
-    const repeatedInColumn = verifyIfRepeatedInColumn(i, matrix);
+    const repeatedInColumn = this.verifyIfRepeatedInColumn(i, matrix);
     if (repeatedInColumn.length !== 0) {
       for (const position of repeatedInColumn) {
         if (
@@ -49,7 +49,7 @@ Board.prototype.validateIncompleteSudoku = function () {
           duplicateNumberPositions.push(position);
       }
     }
-    const repeatedInQuadrant = verifyIfRepeatedInQuadrant(i, matrix);
+    const repeatedInQuadrant = this.verifyIfRepeatedInQuadrant(i, matrix);
     if (repeatedInQuadrant.length !== 0) {
       for (const position of repeatedInQuadrant) {
         if (
@@ -64,7 +64,7 @@ Board.prototype.validateIncompleteSudoku = function () {
   return duplicateNumberPositions;
 };
 
-function verifyIfRepeatedInRow(row, matrix) {
+Board.prototype.verifyIfRepeatedInRow = function (row, matrix) {
   const repeated = [];
   for (let i = 0; i < 9; i++) {
     if (matrix[row][i] == 0) continue;
@@ -73,15 +73,6 @@ function verifyIfRepeatedInRow(row, matrix) {
       if (matrix[row][j] == 0) continue;
       if (matrix[row][i] == matrix[row][j]) {
         const duplicateNumberPosition = [row, j];
-        if (
-          repeated.some((position) =>
-            position.every(
-              (val, index) => val === duplicateNumberPosition[index]
-            )
-          )
-        ) {
-          continue;
-        }
         if (!currentPositionPushed) {
           repeated.push([row, i]);
           currentPositionPushed = !currentPositionPushed;
@@ -91,9 +82,9 @@ function verifyIfRepeatedInRow(row, matrix) {
     }
   }
   return repeated;
-}
+};
 
-function verifyIfRepeatedInColumn(column, matrix) {
+Board.prototype.verifyIfRepeatedInColumn = function (column, matrix) {
   const repeated = [];
   for (let i = 0; i < 9; i++) {
     if (matrix[i][column] == 0) continue;
@@ -102,15 +93,6 @@ function verifyIfRepeatedInColumn(column, matrix) {
       if (matrix[j][column] == 0) continue;
       if (matrix[i][column] == matrix[j][column]) {
         const duplicateNumberPosition = [j, column];
-        if (
-          repeated.some((position) =>
-            position.every(
-              (val, index) => val === duplicateNumberPosition[index]
-            )
-          )
-        ) {
-          continue;
-        }
         if (!currentPositionPushed) {
           repeated.push([i, column]);
           currentPositionPushed = !currentPositionPushed;
@@ -120,9 +102,9 @@ function verifyIfRepeatedInColumn(column, matrix) {
     }
   }
   return repeated;
-}
+};
 
-function verifyIfRepeatedInQuadrant(quadrant, matrix) {
+Board.prototype.verifyIfRepeatedInQuadrant = function (quadrant, matrix) {
   let firstRow = Math.floor(quadrant / 3) * 3;
   let firstColumn = (quadrant * 3) % 9;
   const repeated = [];
@@ -135,15 +117,6 @@ function verifyIfRepeatedInQuadrant(quadrant, matrix) {
           if (matrix[k][l] == 0) continue;
           if (matrix[i][j] == matrix[k][l] && (i != k || j != l)) {
             const duplicateNumberPosition = [k, l];
-            if (
-              repeated.some((position) =>
-                position.every(
-                  (val, index) => val === duplicateNumberPosition[index]
-                )
-              )
-            ) {
-              continue;
-            }
             if (!currentPositionPushed) {
               repeated.push([i, j]);
               currentPositionPushed = !currentPositionPushed;
@@ -155,6 +128,6 @@ function verifyIfRepeatedInQuadrant(quadrant, matrix) {
     }
   }
   return repeated;
-}
+};
 
 module.exports = Board;

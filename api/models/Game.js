@@ -103,15 +103,6 @@ Game.prototype.verifyRow = function (row, matrix) {
         invalids.push([row, j]);
       } else if (matrix[row][i] == matrix[row][j]) {
         const duplicateNumberPosition = [row, j];
-        if (
-          invalids.some((position) =>
-            position.every(
-              (val, index) => val === duplicateNumberPosition[index]
-            )
-          )
-        ) {
-          continue;
-        }
         if (!currentPositionPushed) {
           invalids.push([row, i]);
           currentPositionPushed = !currentPositionPushed;
@@ -136,15 +127,6 @@ Game.prototype.verifyColumn = function (column, matrix) {
         invalids.push([j, column]);
       } else if (matrix[i][column] == matrix[j][column]) {
         const duplicateNumberPosition = [j, column];
-        if (
-          invalids.some((position) =>
-            position.every(
-              (val, index) => val === duplicateNumberPosition[index]
-            )
-          )
-        ) {
-          continue;
-        }
         if (!currentPositionPushed) {
           invalids.push([i, column]);
           currentPositionPushed = !currentPositionPushed;
@@ -173,15 +155,6 @@ Game.prototype.verifyQuadrant = function (quadrant, matrix) {
             invalids.push([k, l]);
           } else if (matrix[i][j] == matrix[k][l] && (i != k || j != l)) {
             const duplicateNumberPosition = [k, l];
-            if (
-              invalids.some((position) =>
-                position.every(
-                  (val, index) => val === duplicateNumberPosition[index]
-                )
-              )
-            ) {
-              continue;
-            }
             if (!currentPositionPushed) {
               invalids.push([i, j]);
               currentPositionPushed = !currentPositionPushed;
