@@ -88,15 +88,24 @@ export const ButtonLink = styled(Link)`
   }
 `;
 
+export const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+`;
+
 export const BannerMessage = styled.div`
-  background-color: ${(props) =>
-    props.success == "true" ? greenColor : redColor};
+  background-color: ${(props) => (props.$success ? greenColor : redColor)};
   border-radius: 5px;
   padding: 15px;
-  max-width: 400px;
-  margin: auto auto 30px;
+  margin: auto 30px;
 
   p {
     margin: 10px auto;
+  }
+
+  @media (min-width: 768px) {
+    width: 650px;
   }
 `;
