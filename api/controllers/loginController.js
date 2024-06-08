@@ -15,7 +15,7 @@ exports.signUp = async (req, res, next) => {
     });
 
     res.status(201).json({
-      message: messages.success.userCreated,
+      success: messages.success.userCreated,
     });
   } catch (error) {
     if (error.name == "SequelizeValidationError") {
@@ -25,14 +25,14 @@ exports.signUp = async (req, res, next) => {
       });
 
       res.status(400).json({
-        message: errorsMessage,
+        errors: errorsMessage,
       });
     } else if (error.name == "SequelizeUniqueConstraintError") {
       res.status(409).json({
-        message: messages.errors.validation.emailAlreadyInUse,
+        errors: [messages.errors.validation.emailAlreadyInUse],
       });
     } else {
-      res.status(500).json({ message: messages.errors.server });
+      res.status(500).json({ errors: [messages.errors.server] });
     }
   }
 };
@@ -52,30 +52,30 @@ exports.login = async (req, res, next) => {
     }
     if (errorsMessage.length > 0) {
       return res.status(401).json({
-        message: errorsMessage,
+        errors: errorsMessage,
       });
     }
 
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(401).json({
-        message: messages.errors.login,
+        errors: [messages.errors.login],
       });
     }
 
     if (!user.checkPassword(password)) {
       return res.status(401).json({
-        message: messages.errors.login,
+        errors: [messages.errors.login],
       });
     }
 
     const token = generateToken(user.id, user.name);
     res.status(200).json({
-      message: messages.success.login,
+      success: messages.success.login,
       token: token,
     });
   } catch (error) {
-    res.status(500).json({ message: messages.errors.server });
+    res.status(500).json({ errors: [messages.errors.server] });
   }
 };
 

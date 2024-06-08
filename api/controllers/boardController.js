@@ -12,11 +12,11 @@ exports.getAvailableBoardIds = async (req, res, next) => {
       return ob["id"];
     });
     res.status(200).json({
-      message: messages.success.list,
+      success: messages.success.list,
       boardIds: boardIds,
     });
   } catch (error) {
-    res.status(500).json({ message: messages.errors.server });
+    res.status(500).json({ errors: [messages.errors.server] });
   }
 };
 
@@ -32,7 +32,7 @@ exports.create = async (req, res, next) => {
     const invalidNumberPositions = board.validateIncompleteSudoku();
     if (invalidNumberPositions.length != 0) {
       return res.status(422).json({
-        message: messages.errors.invalidSudokuGame,
+        errors: [messages.errors.invalidSudokuGame],
         invalidNumberPositions,
       });
     }
@@ -40,15 +40,15 @@ exports.create = async (req, res, next) => {
     await board.save();
 
     res.status(201).json({
-      message: messages.success.boardCreated,
+      success: messages.success.boardCreated,
     });
   } catch (error) {
     if (error instanceof Sequelize.ValidationError) {
       return res.status(400).json({
-        message: messages.errors.invalidSudokuBoard,
+        errors: [messages.errors.invalidSudokuBoard],
       });
     }
-    res.status(500).json({ message: messages.errors.server });
+    res.status(500).json({ errors: [messages.errors.server] });
   }
 };
 
@@ -58,14 +58,14 @@ exports.edit = async (req, res, next) => {
 
     const id = parseInt(req.params.id);
     if (!Number.isInteger(id)) {
-      return res.status(400).json({ message: messages.errors.invalidId });
+      return res.status(400).json({ errors: [messages.errors.invalidId] });
     }
 
     const board = await Board.findByPk(id);
     if (!board) {
       return res
         .status(404)
-        .json({ message: messages.errors.boardDoesNotExist });
+        .json({ errors: [messages.errors.boardDoesNotExist] });
     }
 
     const newBoard = await Board.build({
@@ -77,7 +77,7 @@ exports.edit = async (req, res, next) => {
     const invalidNumberPositions = newBoard.validateIncompleteSudoku();
     if (invalidNumberPositions.length != 0) {
       return res.status(422).json({
-        message: messages.errors.invalidSudokuGame,
+        errors: [messages.errors.invalidSudokuGame],
         invalidNumberPositions,
       });
     }
@@ -88,15 +88,15 @@ exports.edit = async (req, res, next) => {
     });
 
     res.status(200).json({
-      message: messages.success.boardEdited,
+      success: messages.success.boardEdited,
     });
   } catch (error) {
     if (error instanceof Sequelize.ValidationError) {
       return res.status(400).json({
-        message: messages.errors.invalidSudokuBoard,
+        errors: [messages.errors.invalidSudokuBoard],
       });
     }
-    res.status(500).json({ message: messages.errors.server });
+    res.status(500).json({ errors: [messages.errors.server] });
   }
 };
 
@@ -106,18 +106,18 @@ exports.delete = async (req, res, next) => {
 
     const id = parseInt(req.params.id);
     if (!Number.isInteger(id)) {
-      return res.status(400).json({ message: messages.errors.invalidId });
+      return res.status(400).json({ errors: [messages.errors.invalidId] });
     }
 
     const board = await Board.destroy({ where: { id } });
     if (!board) {
       return res
         .status(404)
-        .json({ message: messages.errors.boardDoesNotExist });
+        .json({ errors: [messages.errors.boardDoesNotExist] });
     }
 
     res.status(204).send();
   } catch (error) {
-    res.status(500).json({ message: messages.errors.server });
+    res.status(500).json({ errors: [messages.errors.server] });
   }
 };

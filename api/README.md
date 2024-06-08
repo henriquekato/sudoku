@@ -45,11 +45,12 @@ Content-type: application/json
 
 ### Responses
 
-Todas as "responses" possuem uma chave de mensagem com uma breve descrição do que ocorreu, exceto as com status code 204
-
+Todas as "responses" possuem uma chave de menssagem com uma breve descrição do que ocorreu, exceto as com status code 204
+- Responses de sucesso têm a chave "success" contendo um string
+- Responses de erro têm a chave "errors" contendo um array de strings
 ```
 {
-    "message": "Cadastro feito com sucesso"
+    "success": "Cadastro feito com sucesso"
 }
 ```
 
@@ -116,7 +117,7 @@ Se o email já tiver sido cadastrado
 ```
 {
     "token": { jwt token },
-    "message": "Login feito com sucesso"
+    "succcess": "Login feito com sucesso"
 }
 ```
 
@@ -134,7 +135,7 @@ Apenas onde tiver números "0" devem ser preenchidos
 
 ```
 {
-    "message": "Listagem feita com sucesso",
+    "success": "Listagem feita com sucesso",
     "id": 1,
     "matrix": "[
       [1,2,3,4,5,6,7,8,0],
@@ -168,7 +169,7 @@ Apenas onde tiver números "0" devem ser preenchidos
 
 ```
 {
-    "message": "Listagem feita com sucesso",
+    "success": "Listagem feita com sucesso",
     "id": 1,
     "matrix": "[
       [1,2,3,4,5,6,7,8,0],
@@ -252,7 +253,7 @@ Não é possível que um jogador liste as partidas de outro jogador
 
 ```
 {
-  "message": "Listagem feita com sucesso",
+  "success": "Listagem feita com sucesso",
   "gameIds": [
     {
       "id": 3,
@@ -283,7 +284,7 @@ Não é possível que um jogador liste a partida de outro jogador
 
 ```
 {
-  "message": "Listagem feita com sucesso",
+  "success": "Listagem feita com sucesso",
   "game": {
     "id": 3,
     "completionTime": "10:10:10",
@@ -327,7 +328,7 @@ Ranking de um tabuleiro, por tempo, dos 10 primeiros colocados
 
 ```
 {
-  "message": "Listagem feita com sucesso",
+  "success": "Listagem feita com sucesso",
   "ranking": [
     {
       "id": 17,
@@ -363,7 +364,7 @@ Todos os IDs de tabuleiros cadatrados
 
 ```
 {
-  "message": "Listagem feita com sucesso",
+  "success": "Listagem feita com sucesso",
   "boardIds": [2,3,4,1,5]
 }
 ```
