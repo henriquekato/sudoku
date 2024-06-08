@@ -3,20 +3,21 @@ import { blueColor, whiteColor } from "../styles/colors";
 import { StyledLink } from "../styles/GlobalStyle";
 
 const StyledNav = styled.nav`
-  text-align: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   background-color: ${blueColor};
   color: ${whiteColor};
   padding: 10px 15px;
   font-size: 24px;
+  font-weight: 700;
 `;
 
-function Nav() {
+function Nav(props) {
   return (
     <StyledNav>
-      <StyledLink to={`/`}>Home</StyledLink>
-      <span>Logout</span>
+      {!props.children && <StyledLink to={`/`}>Home</StyledLink>}
+      {props.children && props.children}
+      {!props.children && <span>Logout</span>}
     </StyledNav>
   );
 }

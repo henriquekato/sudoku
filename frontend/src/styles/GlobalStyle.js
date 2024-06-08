@@ -1,5 +1,11 @@
 import { createGlobalStyle, styled } from "styled-components";
-import { darkColor, lightBlueColor, redColor, whiteColor } from "./colors";
+import {
+  darkColor,
+  greenColor,
+  lightBlueColor,
+  redColor,
+  whiteColor,
+} from "./colors";
 import { Link } from "react-router-dom";
 
 export default createGlobalStyle`
@@ -24,7 +30,7 @@ export default createGlobalStyle`
 
 export const H1 = styled.h1`
   text-align: center;
-  margin: 70px 5px;
+  margin: 20px 5px;
   font-size: 48px;
 `;
 
@@ -54,7 +60,8 @@ export const Button = styled.button`
   border-radius: 3px;
   margin: 5px;
   &:hover {
-    background-color: ${(props) => props.hovercolor || lightBlueColor};
+    background-color: ${(props) => props.hoverbg || lightBlueColor};
+    color: ${(props) => props.hovercolor || darkColor};
   }
 `;
 
@@ -78,5 +85,18 @@ export const ButtonLink = styled(Link)`
   border-radius: 5px;
   &:hover {
     background-color: ${lightBlueColor};
+  }
+`;
+
+export const BannerMessage = styled.div`
+  background-color: ${(props) =>
+    props.success == "true" ? greenColor : redColor};
+  border-radius: 5px;
+  padding: 15px;
+  max-width: 400px;
+  margin: auto auto 30px;
+
+  p {
+    margin: 10px auto;
   }
 `;
