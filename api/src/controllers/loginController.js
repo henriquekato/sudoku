@@ -2,7 +2,7 @@ const fs = require("fs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
-const sequelize = require("../db");
+const sequelize = require("../database/db");
 const messages = require("../locales/messages");
 
 exports.signUp = async (req, res, next) => {
@@ -80,7 +80,7 @@ exports.login = async (req, res, next) => {
 };
 
 function generateToken(id, name) {
-  const privateKey = fs.readFileSync("./keys/private.key", "utf-8");
+  const privateKey = fs.readFileSync("./src/keys/private.key", "utf-8");
   const token = jwt.sign({ id, name }, privateKey, {
     algorithm: "RS256",
     expiresIn: 10800000,

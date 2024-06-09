@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 const Game = require("../models/Game");
 const Board = require("../models/Board");
 const User = require("../models/User");
-const sequelize = require("../db");
+const sequelize = require("../database/db");
 const messages = require("../locales/messages");
 
 exports.newSudoku = async (req, res, next) => {
@@ -129,6 +129,7 @@ exports.completedGames = async (req, res, next) => {
       where: {
         userId: res.locals.user.id,
       },
+      order: [["createdAt", "ASC"]],
     });
     res.status(200).json({
       success: messages.success.list,

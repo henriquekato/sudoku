@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
     });
   }
 
-  const publicKey = fs.readFileSync("./keys/public.key", "utf-8");
+  const publicKey = fs.readFileSync("./src/keys/public.key", "utf-8");
   jwt.verify(token, publicKey, { algorithm: "RS256" }, (error, decoded) => {
     if (error) {
       return res.status(401).json({

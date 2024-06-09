@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const loginController = require("./controllers/loginController");
-const boardController = require("./controllers/boardController");
-const gameController = require("./controllers/gameController");
+const loginController = require("./src/controllers/loginController");
+const boardController = require("./src/controllers/boardController");
+const gameController = require("./src/controllers/gameController");
 
-const loginRequired = require("./middlewares/loginRequired");
-const endpointNotFound = require("./middlewares/endpointNotFound");
+const loginRequired = require("./src/middlewares/loginRequired");
+const endpointNotFound = require("./src/middlewares/endpointNotFound");
 
 router.post("/signup", express.json(), loginController.signUp);
 router.post("/login", express.json(), loginController.login);

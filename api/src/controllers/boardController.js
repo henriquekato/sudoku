@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 
 const Board = require("../models/Board");
-const sequelize = require("../db");
+const sequelize = require("../database/db");
 const messages = require("../locales/messages");
 
 exports.getAvailableBoardIds = async (req, res, next) => {

@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 
-const sequelize = require("../db");
+const sequelize = require("../database/db");
 const messages = require("../locales/messages");
 
 const Board = sequelize.define("board", {
