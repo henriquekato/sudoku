@@ -12,7 +12,7 @@ import { jwtDecode } from "jwt-decode";
 import Button from "../Buttons/Button";
 
 function LoginForm(props) {
-  const { setToken, setUsername } = useContext(AuthContext);
+  const { setToken, setUserName } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const inputEmailId = "login-email";
@@ -45,7 +45,7 @@ function LoginForm(props) {
         setEmail("");
         setPassword("");
         setToken(data.token);
-        setUsername(jwtDecode(data.token).name);
+        setUserName(jwtDecode(data.token).name);
         navigate("/");
       } else {
         props.setSuccess("");

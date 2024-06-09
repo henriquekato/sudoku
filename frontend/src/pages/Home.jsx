@@ -11,7 +11,7 @@ const ButtonContainer = styled.nav`
   display: flex;
   flex-direction: column;
   max-width: 500px;
-  margin: 30px auto;
+  margin: 45px auto;
   flex-wrap: wrap;
   align-content: center;
 
@@ -26,8 +26,14 @@ const HomeButtonLink = styled(ButtonLink)`
   min-width: 140px;
 `;
 
+const Paragraph = styled.p`
+  font-size: 30px;
+  margin: auto 10px;
+  text-align: center;
+`
+
 function Home() {
-  const { username } = useContext(AuthContext);
+  const { userName } = useContext(AuthContext);
 
   const [isOpen, setIsOpen] = useState(false);
   const [route, setRoute] = useState("");
@@ -44,7 +50,8 @@ function Home() {
   return (
     <>
       <Nav />
-      <H1>Olá {username}</H1>
+      <H1>Sudoku</H1>
+      <Paragraph>Olá, {userName}</Paragraph>
       <ButtonContainer>
         <HomeButtonLink to={`/profile`}>Meus jogos</HomeButtonLink>
         <Button

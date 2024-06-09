@@ -8,10 +8,11 @@ import ProtectedRoute from "./ProtectedRoute";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./AuthProvider";
+import Logout from "./pages/Logout";
 
 function Routes() {
   const { token } = useContext(AuthContext);
-  
+
   const routesForNotAuthenticatedOnly = [
     {
       path: "/login",
@@ -39,6 +40,10 @@ function Routes() {
         {
           path: "/ranking/:boardId",
           element: <Ranking />,
+        },
+        {
+          path: "/logout",
+          element: <Logout />,
         },
       ],
     },

@@ -21,7 +21,7 @@ function Nav(props) {
     <StyledNav>
       {!props.children && <StyledLink to={`/`}>Home</StyledLink>}
       {props.children && props.children}
-      {!props.children && <span>Logout</span>}
+      {!props.children && <StyledLink to={"/logout"}>Logout</StyledLink>}
     </StyledNav>
   );
 }

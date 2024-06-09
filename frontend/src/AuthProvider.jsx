@@ -4,13 +4,13 @@ const AuthContext = createContext();
 
 function AuthProvider({ children }) {
   const [token, setToken] = useState("");
-  const [username, setUsername] = useState("");
+  const [userName, setUserName] = useState("");
 
   const contextValue = {
     token,
     setToken,
-    username,
-    setUsername,
+    userName,
+    setUserName,
   };
 
   return (
