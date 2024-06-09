@@ -12,6 +12,26 @@ const PlayAgainButtonLink = styled(ButtonLink)`
   padding: 5px;
   border: none;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const ProfileList = styled(RankingList)`
+  max-width: 500px;
+
+  @media (min-width: 768px) {
+    max-width: 670px;
+  }
+`;
+
+const ProfileGame = styled(RankingItem)`
+  grid-template-columns: repeat(2, 1fr);
+  
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;
 
 function Profile() {
@@ -43,18 +63,18 @@ function Profile() {
     <>
       <Nav />
       <H1>Seus jogos</H1>
-      <RankingList>
+      <ProfileList>
         {games.map((game, index) => (
-          <RankingItem key={game.id}>
+          <ProfileGame key={game.id}>
             <div>Jogo {index + 1}</div>
             <div>Tabuleiro {game.boardId}</div>
             <div>Tempo {game.completionTime}</div>
-            <PlayAgainButtonLink hoverbg={"rgba(0, 0, 0, 0.1)"}>
+            <PlayAgainButtonLink to={`/game/${game.boardId}`}>
               Jogar novamente
             </PlayAgainButtonLink>
-          </RankingItem>
+          </ProfileGame>
         ))}
-      </RankingList>
+      </ProfileList>
     </>
   );
 }

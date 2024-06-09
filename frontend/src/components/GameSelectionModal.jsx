@@ -1,10 +1,17 @@
 import { styled } from "styled-components";
+import ButtonLink from "./Buttons/ButtonLink";
 import Button from "./Buttons/Button";
-import { blueColor, lightBlueColor, pinkColor, redColor, whiteColor } from "../styles/colors";
+import {
+  blueColor,
+  lightBlueColor,
+  pinkColor,
+  redColor,
+  whiteColor,
+} from "../styles/colors";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider";
 import { allBoardsUri } from "../apiEndpoints";
-import H2 from "./Headings/H2"
+import H2 from "./Headings/H2";
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -42,15 +49,13 @@ const OptionContainer = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
 `;
 
-const Option = styled(Button)`
+const Option = styled(ButtonLink)`
   padding: 5px 12px;
   font-size: 24px;
   margin: 10px;
 `;
 
 function GameSelectionModal(props) {
-  if (!props.isOpen) return;
-
   const { token } = useContext(AuthContext);
 
   const [boards, setBoards] = useState([]);
@@ -80,16 +85,26 @@ function GameSelectionModal(props) {
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <CloseButton
           onClick={props.closeModal}
-          bg={redColor}
-          bordercolor={redColor}
-          hoverbg={pinkColor}
+          $bg={redColor}
+          $bordercolor={redColor}
+          $hoverbg={pinkColor}
         >
           X
         </CloseButton>
-        <H2>{props.modalText}</H2>
+        <H2>Escolha o tabuleiro</H2>
         <OptionContainer>
           {boards.map((board) => (
-            <Option key={board} color={whiteColor} bg={blueColor} bordercolor={blueColor} hoverbg={lightBlueColor}>{board}</Option>
+            <Option
+              key={board}
+              color={whiteColor}
+              $bg={blueColor}
+              $bordercolor={blueColor}
+              $hoverbg={lightBlueColor}
+              to={`/${props.route}/${board}`}
+              state={{ boardId: board }}
+            >
+              {board}
+            </Option>
           ))}
         </OptionContainer>
       </ModalContent>

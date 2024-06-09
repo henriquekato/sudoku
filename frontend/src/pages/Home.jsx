@@ -30,10 +30,10 @@ function Home() {
   const { username } = useContext(AuthContext);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [modalText, setModalText] = useState("");
+  const [route, setRoute] = useState("");
 
-  function openModal(modalText) {
-    setModalText(modalText);
+  function openModal(modalRoute) {
+    setRoute(modalRoute);
     setIsOpen(true);
   }
 
@@ -49,27 +49,23 @@ function Home() {
         <HomeButtonLink to={`/profile`}>Meus jogos</HomeButtonLink>
         <Button
           onClick={() => {
-            openModal("Jogar");
+            openModal("game");
           }}
-          modaltext="Jogar"
         >
           Jogar
         </Button>
         <Button
           onClick={() => {
-            openModal("Ranking");
+            openModal("ranking");
           }}
-          modaltext="Ranking"
         >
           Ranking
         </Button>
       </ButtonContainer>
-
-      <GameSelectionModal
-        isOpen={isOpen}
+      {isOpen && <GameSelectionModal
         closeModal={closeModal}
-        modalText={modalText}
-      />
+        route={route}
+      />}
     </>
   );
 }

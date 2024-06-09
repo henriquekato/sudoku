@@ -92,9 +92,9 @@ function SignupForm(props) {
           />
         </FormField>
         <Button
-          bordercolor={darkColor}
-          hoverbg={darkColor}
-          hovercolor={whiteColor}
+          $bordercolor={darkColor}
+          $hoverbg={darkColor}
+          $hovercolor={whiteColor}
           onClick={handleSubmit}
         >
           Cadastrar
