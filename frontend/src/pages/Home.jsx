@@ -1,9 +1,29 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Nav from "../components/Nav";
 import GameSelectionModal from "../components/GameSelectionModal";
-import { H1, ButtonContainer, ButtonLink, Button } from "../styles/GlobalStyle";
+import ButtonLink from "../components/Buttons/ButtonLink";
+import Button from "../components/Buttons/Button";
+import H1 from "../components/Headings/H1";
+import { AuthContext } from "../AuthProvider";
+import styled from "styled-components";
+
+const ButtonContainer = styled.nav`
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 30px auto;
+  flex-wrap: wrap;
+  align-content: center;
+
+  @media (min-width: 480px) {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+`;
 
 function Home() {
+  const { username } = useContext(AuthContext);
+
   const [isOpen, setIsOpen] = useState(false);
   const [modalText, setModalText] = useState("");
 
@@ -19,7 +39,7 @@ function Home() {
   return (
     <>
       <Nav />
-      <H1>Olá</H1>
+      <H1>Olá {username}</H1>
       <ButtonContainer>
         <ButtonLink to={`/profile`}>Meus jogos</ButtonLink>
         <Button

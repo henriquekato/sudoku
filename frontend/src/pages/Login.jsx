@@ -1,11 +1,12 @@
-import { H1, Header, BannerMessage } from "../styles/GlobalStyle";
+import H1 from "../components/Headings/H1";
 import SignupForm from "../components/Form/SignupForm";
 import LoginForm from "../components/Form/LoginForm";
 import Nav from "../components/Nav";
 import styled from "styled-components";
 import { useState } from "react";
+import BannerMessage from "../components/BannerMessage";
 
-const Container = styled.div`
+const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,6 +14,13 @@ const Container = styled.div`
   @media (min-width: 768px) {
     flex-direction: row;
   }
+`;
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
 `;
 
 function Login() {
@@ -23,7 +31,7 @@ function Login() {
     <>
       <Nav>Sudoku</Nav>
       <Header>
-        <H1>Bem vindo</H1>
+        <H1>Sudoku</H1>
         {success && <BannerMessage $success>{success}</BannerMessage>}
         {errors.length > 0 && (
           <BannerMessage>
@@ -33,10 +41,10 @@ function Login() {
           </BannerMessage>
         )}
       </Header>
-      <Container>
+      <FormContainer>
         <SignupForm setSuccess={setSuccess} setErrors={setErrors} />
         <LoginForm setSuccess={setSuccess} setErrors={setErrors} />
-      </Container>
+      </FormContainer>
     </>
   );
 }

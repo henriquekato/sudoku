@@ -1,5 +1,5 @@
 import Nav from "../components/Nav";
-import { H1 } from "../styles/GlobalStyle";
+import H1 from "../components/Headings/H1";
 
 function NotFound() {
   return (

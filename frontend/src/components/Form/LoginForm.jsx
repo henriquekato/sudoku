@@ -1,10 +1,15 @@
 import { useContext, useState } from "react";
-import { Button } from "../../styles/GlobalStyle";
 import { darkColor, whiteColor } from "../../styles/colors";
 import { loginUri } from "../../apiEndpoints";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider";
-import { Form, Input, Label, FormField, H2 } from "./styled";
+import FormDiv from "./FormDiv";
+import Input from "./Input";
+import Label from "./Label";
+import FormField from "./FormField";
+import H2 from "../Headings/H2";
+import { jwtDecode } from "jwt-decode";
+import Button from "../Buttons/Button";
 
 function LoginForm(props) {
   const { setToken, setUsername } = useContext(AuthContext);
@@ -37,12 +42,10 @@ function LoginForm(props) {
       const response = await fetch(loginUri, options);
       const data = await response.json();
       if (response.ok) {
-        props.setSuccess(data.success);
-        props.setErrors([]);
         setEmail("");
         setPassword("");
         setToken(data.token);
-        setUsername(data.name);
+        setUsername(jwtDecode(data.token).name);
         navigate("/");
       } else {
         props.setSuccess("");
@@ -56,7 +59,7 @@ function LoginForm(props) {
   return (
     <div>
       <H2>Login</H2>
-      <Form>
+      <FormDiv>
         <FormField>
           <Label htmlFor={inputEmailId}>Email:</Label>
           <Input
@@ -87,7 +90,7 @@ function LoginForm(props) {
         >
           Login
         </Button>
-      </Form>
+      </FormDiv>
     </div>
   );
 }

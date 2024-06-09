@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { Button } from "../../styles/GlobalStyle";
 import { darkColor, whiteColor } from "../../styles/colors";
 import { signupUri } from "../../apiEndpoints";
-import { Form, Input, Label, FormField, H2 } from "./styled";
+import FormDiv from "./FormDiv";
+import Input from "./Input";
+import Label from "./Label";
+import FormField from "./FormField";
+import H2 from "../Headings/H2";
+import Button from "../Buttons/Button";
 
 function SignupForm(props) {
   const inputNameId = "signup-name";
@@ -53,7 +57,7 @@ function SignupForm(props) {
   return (
     <div>
       <H2>Cadastro</H2>
-      <Form>
+      <FormDiv>
         <FormField>
           <Label htmlFor={inputNameId}>Nome:</Label>
           <Input
@@ -95,7 +99,7 @@ function SignupForm(props) {
         >
           Cadastrar
         </Button>
-      </Form>
+      </FormDiv>
     </div>
   );
 }
