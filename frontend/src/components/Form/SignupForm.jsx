@@ -23,7 +23,7 @@ function SignupForm(props) {
       setName(value);
     } else if (name == "email") {
       setEmail(value);
-    } else if (name == "password") {
+    } else {
       setPassword(value);
     }
   }

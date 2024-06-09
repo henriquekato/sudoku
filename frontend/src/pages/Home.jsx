@@ -21,6 +21,11 @@ const ButtonContainer = styled.nav`
   }
 `;
 
+const HomeButtonLink = styled(ButtonLink)`
+  font-size: 20px;
+  min-width: 140px;
+`;
+
 function Home() {
   const { username } = useContext(AuthContext);
 
@@ -41,7 +46,7 @@ function Home() {
       <Nav />
       <H1>Olá {username}</H1>
       <ButtonContainer>
-        <ButtonLink to={`/profile`}>Meus jogos</ButtonLink>
+        <HomeButtonLink to={`/profile`}>Meus jogos</HomeButtonLink>
         <Button
           onClick={() => {
             openModal("Jogar");

@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import Button from "./Buttons/Button";
-import { pinkColor, redColor } from "../styles/colors";
+import { blueColor, lightBlueColor, pinkColor, redColor, whiteColor } from "../styles/colors";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider";
 import { allBoardsUri } from "../apiEndpoints";
@@ -89,7 +89,7 @@ function GameSelectionModal(props) {
         <H2>{props.modalText}</H2>
         <OptionContainer>
           {boards.map((board) => (
-            <Option key={board}>{board}</Option>
+            <Option key={board} color={whiteColor} bg={blueColor} bordercolor={blueColor} hoverbg={lightBlueColor}>{board}</Option>
           ))}
         </OptionContainer>
       </ModalContent>

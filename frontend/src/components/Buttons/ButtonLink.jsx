@@ -7,16 +7,14 @@ const ButtonLink = styled(Link)`
   text-align: center;
   padding: 12px 20px;
   margin: 5px;
-  font-size: 20px;
-  min-width: 140px;
-  background-color: ${whiteColor};
-  color: ${darkColor};
-  border: 3px solid ${lightBlueColor};
+  background-color: ${(props) => props.bg || whiteColor};
+  color: ${(props) => props.color || darkColor};
+  border: 3px solid ${(props) => props.bordercolor || lightBlueColor};
   text-align: center;
-  text-decoration: none;
   border-radius: 5px;
   &:hover {
-    background-color: ${lightBlueColor};
+    background-color: ${(props) => props.hoverbg || lightBlueColor};
+    color: ${(props) => props.hovercolor || darkColor};
   }
 `;
 

@@ -7,9 +7,7 @@ const Button = styled.button`
   font-size: 20px;
   padding: 12px 20px;
   text-align: center;
-  border: ${(props) =>
-    (props.bordercolor && "3px solid " + props.bordercolor) ||
-    "3px solid " + lightBlueColor};
+  border: 3px solid ${(props) => props.bordercolor || lightBlueColor};
   border-radius: 3px;
   margin: 5px;
   &:hover {

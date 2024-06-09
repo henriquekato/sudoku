@@ -25,7 +25,7 @@ function LoginForm(props) {
     const { name, value } = e.target;
     if (name == "email") {
       setEmail(value);
-    } else if (name == "password") {
+    } else {
       setPassword(value);
     }
   }
