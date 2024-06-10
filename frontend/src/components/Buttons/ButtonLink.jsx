@@ -9,7 +9,10 @@ const ButtonLink = styled(Link)`
   margin: 5px;
   background-color: ${(props) => props.$bg || whiteColor};
   color: ${(props) => props.$color || darkColor};
-  border: 3px solid ${(props) => props.$bordercolor || lightBlueColor};
+  border: ${(props) =>
+    props.$border
+      ? "3px solid " + (props.$bordercolor || lightBlueColor)
+      : "none"};
   text-align: center;
   border-radius: 5px;
   &:hover {

@@ -7,7 +7,10 @@ const Button = styled.button`
   font-size: 20px;
   padding: 12px 20px;
   text-align: center;
-  border: 3px solid ${(props) => props.$bordercolor || lightBlueColor};
+  border: ${(props) =>
+    props.$border
+      ? "3px solid " + (props.$bordercolor || lightBlueColor)
+      : "none"};
   border-radius: 3px;
   margin: 5px;
   &:hover {

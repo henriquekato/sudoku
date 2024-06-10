@@ -1,48 +1,19 @@
 import { styled } from "styled-components";
-import ButtonLink from "./Buttons/ButtonLink";
-import Button from "./Buttons/Button";
+import ButtonLink from "../Buttons/ButtonLink";
 import {
   blueColor,
   lightBlueColor,
   pinkColor,
   redColor,
   whiteColor,
-} from "../styles/colors";
+} from "../../styles/colors";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../AuthProvider";
-import { allBoardsUri } from "../apiEndpoints";
-import H2 from "./Headings/H2";
-
-const ModalBackdrop = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalContent = styled.div`
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  flex: 1 0 300px;
-  margin: auto 10px;
-  position: relative;
-  max-width: 400px;
-`;
-
-const CloseButton = styled(Button)`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  padding: 4px;
-  width: 40px;
-  height: 40px;
-`;
+import { AuthContext } from "../../AuthProvider";
+import { allBoardsUri } from "../../apiEndpoints";
+import H2 from "../Headings/H2";
+import CloseButton from "./CloseButton";
+import ModalBackdrop from "./ModalBackdrop";
+import ModalContent from "./ModalContent";
 
 const OptionContainer = styled.div`
   display: grid;
@@ -86,7 +57,6 @@ function GameSelectionModal(props) {
         <CloseButton
           onClick={props.closeModal}
           $bg={redColor}
-          $bordercolor={redColor}
           $hoverbg={pinkColor}
         >
           X
@@ -96,9 +66,8 @@ function GameSelectionModal(props) {
           {boards.map((board) => (
             <Option
               key={board}
-              color={whiteColor}
+              $color={whiteColor}
               $bg={blueColor}
-              $bordercolor={blueColor}
               $hoverbg={lightBlueColor}
               to={`/${props.route}/${board}`}
               state={{ boardId: board }}

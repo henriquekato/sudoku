@@ -83,6 +83,7 @@ function LoginForm(props) {
           />
         </FormField>
         <Button
+          $border
           $bordercolor={darkColor}
           $hoverbg={darkColor}
           $hovercolor={whiteColor}

@@ -34,6 +34,10 @@ function Routes() {
           element: <Profile />,
         },
         {
+          path: "/game",
+          element: <Game />,
+        },
+        {
           path: "/game/:boardId",
           element: <Game />,
         },

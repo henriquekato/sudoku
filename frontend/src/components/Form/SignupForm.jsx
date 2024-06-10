@@ -92,6 +92,7 @@ function SignupForm(props) {
           />
         </FormField>
         <Button
+          $border
           $bordercolor={darkColor}
           $hoverbg={darkColor}
           $hovercolor={whiteColor}
