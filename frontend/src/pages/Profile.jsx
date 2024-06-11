@@ -1,5 +1,5 @@
 import Nav from "../components/Nav";
-import H1 from "../components/Headings/H1";
+import Header from "../components/Headings/Header";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider";
 import { profileUri } from "../apiEndpoints";
@@ -62,7 +62,7 @@ function Profile() {
   return (
     <>
       <Nav />
-      <H1>Seus jogos</H1>
+      <Header>Seus jogos</Header>
       <ProfileList>
         {games.map((game, index) => (
           <ProfileGame key={game.id}>

@@ -3,7 +3,7 @@ import Nav from "../components/Nav";
 import GameSelectionModal from "../components/Modal/GameSelectionModal";
 import ButtonLink from "../components/Buttons/ButtonLink";
 import Button from "../components/Buttons/Button";
-import H1 from "../components/Headings/H1";
+import Header from "../components/Headings/Header";
 import { AuthContext } from "../AuthProvider";
 import styled from "styled-components";
 import GameSelectionDropdown from "../components/Dropdown/GameSelectionDropdown";
@@ -65,20 +65,20 @@ function Home() {
   return (
     <>
       <Nav />
-      <H1>Sudoku</H1>
+      <Header>Sudoku</Header>
       <Paragraph>Olá, {userName}</Paragraph>
       <ButtonContainer>
         <HomeButtonLink to={`/profile`} $border>
           Meus jogos
         </HomeButtonLink>
         <GameSelectionDropdown text="Jogar">
-          <DropdownButtonLink to={"/game"} $hoverbg={"rgba(0, 0, 0, 0.2)"}>
+          <DropdownButtonLink to={"/newgame"} $hoverbg={"rgba(0, 0, 0, 0.2)"}>
             Aleatório
           </DropdownButtonLink>
           <DropdownButton
             $hoverbg={"rgba(0, 0, 0, 0.2)"}
             onClick={() => {
-              openModal("game");
+              openModal("newgame");
             }}
           >
             Escolher tabuleiro

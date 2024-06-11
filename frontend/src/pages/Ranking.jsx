@@ -1,5 +1,5 @@
 import Nav from "../components/Nav";
-import H1 from "../components/Headings/H1";
+import Header from "../components/Headings/Header";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider";
 import { rankingUri } from "../apiEndpoints";
@@ -7,7 +7,7 @@ import RankingList from "../components/Ranking/RankingList";
 import RankingItem from "../components/Ranking/RankingItem";
 import styled from "styled-components";
 import ButtonLink from "../components/Buttons/ButtonLink";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const PlayButtonLink = styled(ButtonLink)`
   padding: 10px;
@@ -24,19 +24,18 @@ const PlayButtonLink = styled(ButtonLink)`
 const Container = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
 function Ranking() {
   const { token } = useContext(AuthContext);
-
-  const { state } = useLocation();
+  const { boardId } = useParams();
 
   const [games, setGames] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(`${rankingUri}/${state.boardId}`, {
+        const response = await fetch(`${rankingUri}/${boardId}`, {
           method: "GET",
           headers: {
             "Content-type": "application/json",
@@ -56,7 +55,7 @@ function Ranking() {
   return (
     <>
       <Nav />
-      <H1>Ranking do tabuleiro {state.boardId}</H1>
+      <Header>Ranking do tabuleiro {boardId}</Header>
       <RankingList>
         {games.map((game, index) => (
           <RankingItem key={game.id}>
@@ -67,8 +66,8 @@ function Ranking() {
         ))}
       </RankingList>
       <Container>
-        <PlayButtonLink to={`/game/${state.boardId}`}>
-          Jogar tabuleiro {state.boardId}
+        <PlayButtonLink to={`/game/${boardId}`}>
+          Jogar tabuleiro {boardId}
         </PlayButtonLink>
       </Container>
     </>

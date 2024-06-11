@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { greenColor, redColor } from "../styles/colors";
+import { greenColor, redColor } from "../../styles/colors";
 
 const BannerMessage = styled.div`
   background-color: ${(props) => (props.$success ? greenColor : redColor)};

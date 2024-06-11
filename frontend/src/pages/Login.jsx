@@ -1,10 +1,10 @@
-import H1 from "../components/Headings/H1";
+import Header from "../components/Headings/Header";
 import SignupForm from "../components/Form/SignupForm";
 import LoginForm from "../components/Form/LoginForm";
 import Nav from "../components/Nav";
 import styled from "styled-components";
 import { useState } from "react";
-import BannerMessage from "../components/BannerMessage";
+import Messages from "../components/Messages/Messages";
 
 const FormContainer = styled.div`
   display: flex;
@@ -16,13 +16,6 @@ const FormContainer = styled.div`
   }
 `;
 
-const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 30px;
-`;
-
 function Login() {
   const [errors, setErrors] = useState([]);
   const [success, setSuccess] = useState("");
@@ -30,17 +23,8 @@ function Login() {
   return (
     <>
       <Nav>Sudoku</Nav>
-      <Header>
-        <H1>Sudoku</H1>
-        {success && <BannerMessage $success>{success}</BannerMessage>}
-        {errors.length > 0 && (
-          <BannerMessage>
-            {errors.map((error, index) => (
-              <p key={index}>{error}</p>
-            ))}
-          </BannerMessage>
-        )}
-      </Header>
+      <Header>Sudoku</Header>
+      <Messages errors={errors} success={success} />
       <FormContainer>
         <SignupForm setSuccess={setSuccess} setErrors={setErrors} />
         <LoginForm setSuccess={setSuccess} setErrors={setErrors} />
