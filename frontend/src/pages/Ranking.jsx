@@ -52,6 +52,10 @@ function Ranking() {
     })();
   }, []);
 
+  function formattedTime(time) {
+    return time.substring(3);
+  }
+
   return (
     <>
       <Nav />
@@ -61,12 +65,12 @@ function Ranking() {
           <RankingItem key={game.id}>
             <div>{index + 1}º</div>
             <div>{game.userName}</div>
-            <div>Tempo {game.completionTime}</div>
+            <div>Tempo: {formattedTime(game.completionTime)}</div>
           </RankingItem>
         ))}
       </RankingList>
       <Container>
-        <PlayButtonLink to={`/game/${boardId}`}>
+        <PlayButtonLink to={`/newgame/${boardId}`}>
           Jogar tabuleiro {boardId}
         </PlayButtonLink>
       </Container>

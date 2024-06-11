@@ -28,7 +28,7 @@ const ProfileList = styled(RankingList)`
 
 const ProfileGame = styled(RankingItem)`
   grid-template-columns: repeat(2, 1fr);
-  
+
   @media (min-width: 768px) {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -59,6 +59,10 @@ function Profile() {
     })();
   }, []);
 
+  function formattedTime(time) {
+    return time.substring(3);
+  }
+
   return (
     <>
       <Nav />
@@ -68,8 +72,8 @@ function Profile() {
           <ProfileGame key={game.id}>
             <div>Jogo {index + 1}</div>
             <div>Tabuleiro {game.boardId}</div>
-            <div>Tempo {game.completionTime}</div>
-            <PlayAgainButtonLink to={`/game/${game.boardId}`}>
+            <div>Tempo: {formattedTime(game.completionTime)}</div>
+            <PlayAgainButtonLink to={`/newgame/${game.boardId}`}>
               Jogar novamente
             </PlayAgainButtonLink>
           </ProfileGame>

@@ -27,7 +27,7 @@ function Game() {
         const data = await response.json();
         if (response.ok) {
           navigate(`/game`, {
-            state: { matrix: data.matrix, boardId: data.id },
+            state: { matrix: JSON.parse(data.matrix), boardId: data.id },
           });
         } else {
           navigate("/");

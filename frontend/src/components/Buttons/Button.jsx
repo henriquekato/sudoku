@@ -11,7 +11,7 @@ const Button = styled.button`
     props.$border
       ? "3px solid " + (props.$bordercolor || lightBlueColor)
       : "none"};
-  border-radius: 3px;
+  border-radius: 5px;
   margin: 5px;
   &:hover {
     background-color: ${(props) => props.$hoverbg || lightBlueColor};

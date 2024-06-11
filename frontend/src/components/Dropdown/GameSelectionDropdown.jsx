@@ -45,7 +45,7 @@ function GameSelectionDropdown(props) {
   return (
     <StyledDropdown $isOpen={isOpen}>
       <Button onClick={toggleDropdown} $border>
-        {props.text} ⮟
+        {props.text} ⯆
       </Button>
       {isOpen && <Container>{props.children}</Container>}
     </StyledDropdown>
