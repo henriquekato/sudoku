@@ -40,7 +40,7 @@ function Sudoku(props) {
         <StyledSudoku>
           <tbody>
             {props.matrix.map((row, indexRow) => (
-              <tr>
+              <tr key={indexRow}>
                 {row.map((value, indexColumn) => {
                   if (props.modifiable[indexRow][indexColumn]) {
                     return (
