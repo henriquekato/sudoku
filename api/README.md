@@ -249,6 +249,13 @@ Se o tabuleiro de ID informado não existir
 
 Solução inválida
 
+```
+{
+  "errors": ["Sudoku completado incorretamente."],
+  "invalidNumberPositions": [[1,1],[1,2],[6,2]]
+}
+```
+
 ### GET /profile
 
 Informações dos jogos concluídos pelo jogador: id do jogo, tempo de conclusão e id do tabuleiro
@@ -257,27 +264,29 @@ Não é possível que um jogador liste as partidas de outro jogador
 
 **RESPONSE 200**
 
-```
+````
+
 {
-  "success": "Listagem feita com sucesso",
-  "gameIds": [
-    {
-      "id": 3,
-      "completionTime": "00:10:00",
-      "boardId": 1
-    },
-    {
-      "id": 4,
-      "completionTime": "00:09:00",
-      "boardId": 2
-    },
-    {
-      "id": 5,
-      "completionTime": "00:05:00",
-      "boardId": 3
-    }
-  ]
+"success": "Listagem feita com sucesso",
+"gameIds": [
+{
+"id": 3,
+"completionTime": "00:10:00",
+"boardId": 1
+},
+{
+"id": 4,
+"completionTime": "00:09:00",
+"boardId": 2
+},
+{
+"id": 5,
+"completionTime": "00:05:00",
+"boardId": 3
 }
+]
+}
+
 ```
 
 ### GET /profile/{gameId}
@@ -289,25 +298,27 @@ Não é possível que um jogador liste a partida de outro jogador
 **RESPONSE 200**
 
 ```
+
 {
-  "success": "Listagem feita com sucesso",
-  "game": {
-    "id": 3,
-    "completionTime": "10:10:10",
-    "matrix": [
-      [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      [4, 5, 6, 7, 8, 9, 1, 2, 3],
-      [7, 8, 9, 1, 2, 3, 4, 5, 6],
-      [2, 3, 4, 5, 6, 7, 8, 9, 1],
-      [5, 6, 7, 8, 9, 1, 2, 3, 4],
-      [8, 9, 1, 2, 3, 4, 5, 6, 7],
-      [3, 4, 5, 6, 7, 8, 9, 1, 2],
-      [6, 7, 8, 9, 1, 2, 3, 4, 5],
-      [9, 1, 2, 3, 4, 5, 6, 7, 8]
-    ],
-    "boardId": 1
-  }
+"success": "Listagem feita com sucesso",
+"game": {
+"id": 3,
+"completionTime": "10:10:10",
+"matrix": [
+[1, 2, 3, 4, 5, 6, 7, 8, 9],
+[4, 5, 6, 7, 8, 9, 1, 2, 3],
+[7, 8, 9, 1, 2, 3, 4, 5, 6],
+[2, 3, 4, 5, 6, 7, 8, 9, 1],
+[5, 6, 7, 8, 9, 1, 2, 3, 4],
+[8, 9, 1, 2, 3, 4, 5, 6, 7],
+[3, 4, 5, 6, 7, 8, 9, 1, 2],
+[6, 7, 8, 9, 1, 2, 3, 4, 5],
+[9, 1, 2, 3, 4, 5, 6, 7, 8]
+],
+"boardId": 1
 }
+}
+
 ```
 
 **RESPONSE 400**
@@ -333,21 +344,23 @@ Ranking de um tabuleiro, por tempo, dos 10 primeiros colocados
 **RESPONSE 200**
 
 ```
+
 {
-  "success": "Listagem feita com sucesso",
-  "ranking": [
-    {
-      "id": 17,
-      "completionTime": "00:05:00",
-      "userName": "player1"
-    },
-    {
-      "id": 22,
-      "completionTime": "00:07:00",
-      "userName": "player2"
-    }
-  ]
+"success": "Listagem feita com sucesso",
+"ranking": [
+{
+"id": 17,
+"completionTime": "00:05:00",
+"userName": "player1"
+},
+{
+"id": 22,
+"completionTime": "00:07:00",
+"userName": "player2"
 }
+]
+}
+
 ```
 
 **RESPONSE 400**
@@ -369,10 +382,12 @@ Todos os IDs de tabuleiros cadatrados
 **RESPONSE 200**
 
 ```
+
 {
-  "success": "Listagem feita com sucesso",
-  "boardIds": [2,3,4,1,5]
+"success": "Listagem feita com sucesso",
+"boardIds": [2,3,4,1,5]
 }
+
 ```
 
 **RESPONSE 401**
@@ -388,19 +403,21 @@ O número "0" indica que deverá ser preenchido com algum número pelo jogador
 **REQUEST**
 
 ```
+
 {
-  "matrix": [
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [4, 5, 6, 7, 8, 9, 1, 2, 3],
-    [0, 8, 9, 1, 0, 3, 4, 5, 6],
-    [2, 3, 4, 5, 6, 7, 8, 9, 1],
-    [5, 0, 7, 8, 9, 1, 0, 3, 4],
-    [8, 9, 1, 2, 0, 4, 5, 6, 7],
-    [3, 4, 5, 6, 7, 8, 9, 1, 2],
-    [6, 0, 8, 9, 1, 2, 3, 4, 5],
-    [9, 1, 2, 3, 0, 5, 6, 7, 8]
-  ]
+"matrix": [
+[1, 2, 3, 4, 5, 6, 7, 8, 9],
+[4, 5, 6, 7, 8, 9, 1, 2, 3],
+[0, 8, 9, 1, 0, 3, 4, 5, 6],
+[2, 3, 4, 5, 6, 7, 8, 9, 1],
+[5, 0, 7, 8, 9, 1, 0, 3, 4],
+[8, 9, 1, 2, 0, 4, 5, 6, 7],
+[3, 4, 5, 6, 7, 8, 9, 1, 2],
+[6, 0, 8, 9, 1, 2, 3, 4, 5],
+[9, 1, 2, 3, 0, 5, 6, 7, 8]
+]
 }
+
 ```
 
 **RESPONSE 201**
@@ -426,19 +443,21 @@ Edita um tabuleiro de sudoku
 **REQUEST**
 
 ```
+
 {
-  "matrix": [
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [4, 5, 6, 7, 8, 9, 1, 2, 3],
-    [0, 8, 9, 1, 0, 3, 4, 5, 6],
-    [2, 3, 4, 5, 6, 7, 8, 9, 1],
-    [5, 0, 7, 8, 9, 1, 0, 3, 4],
-    [8, 9, 1, 2, 0, 4, 5, 6, 7],
-    [3, 4, 5, 6, 7, 8, 9, 1, 2],
-    [6, 0, 8, 9, 1, 2, 3, 4, 5],
-    [9, 1, 2, 3, 0, 5, 6, 7, 8]
-  ]
+"matrix": [
+[1, 2, 3, 4, 5, 6, 7, 8, 9],
+[4, 5, 6, 7, 8, 9, 1, 2, 3],
+[0, 8, 9, 1, 0, 3, 4, 5, 6],
+[2, 3, 4, 5, 6, 7, 8, 9, 1],
+[5, 0, 7, 8, 9, 1, 0, 3, 4],
+[8, 9, 1, 2, 0, 4, 5, 6, 7],
+[3, 4, 5, 6, 7, 8, 9, 1, 2],
+[6, 0, 8, 9, 1, 2, 3, 4, 5],
+[9, 1, 2, 3, 0, 5, 6, 7, 8]
+]
 }
+
 ```
 
 **RESPONSE 200**
@@ -495,3 +514,5 @@ Se o token for inválido: requisições sem header, requisições sem token, tok
 ### Notas
 
 - `matrix` precisa ser 9x9, em que o número 0 representa espaços que devem ser preenchidos
+```
+````
