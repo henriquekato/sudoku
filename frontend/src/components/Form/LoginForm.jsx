@@ -58,7 +58,7 @@ function LoginForm(props) {
 
   return (
     <div>
-      <H2>Login</H2>
+      <H2 $margin>Login</H2>
       <FormDiv>
         <FormField>
           <Label htmlFor={inputEmailId}>Email:</Label>

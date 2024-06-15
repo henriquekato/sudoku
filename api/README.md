@@ -46,8 +46,10 @@ Content-type: application/json
 ### Responses
 
 Todas as "responses" possuem uma chave de menssagem com uma breve descrição do que ocorreu, exceto as com status code 204
+
 - Responses de sucesso têm a chave "success" contendo um string
 - Responses de erro têm a chave "errors" contendo um array de strings
+
 ```
 {
     "success": "Cadastro feito com sucesso"

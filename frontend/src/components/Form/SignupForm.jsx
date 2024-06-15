@@ -56,7 +56,7 @@ function SignupForm(props) {
 
   return (
     <div>
-      <H2>Cadastro</H2>
+      <H2 $margin>Cadastro</H2>
       <FormDiv>
         <FormField>
           <Label htmlFor={inputNameId}>Nome:</Label>
