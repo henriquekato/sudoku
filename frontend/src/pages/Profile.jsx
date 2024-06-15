@@ -73,7 +73,7 @@ function Profile() {
             <div>Jogo {index + 1}</div>
             <div>Tabuleiro {game.boardId}</div>
             <div>Tempo: {formattedTime(game.completionTime)}</div>
-            <PlayAgainButtonLink to={`/newgame/${game.boardId}`}>
+            <PlayAgainButtonLink to={`/game/${game.boardId}`}>
               Jogar novamente
             </PlayAgainButtonLink>
           </ProfileGame>

@@ -1,4 +1,3 @@
-import { useLocation } from "react-router-dom";
 import Header from "../components/Headings/Header";
 import Nav from "../components/Nav";
 import { useContext, useEffect, useState } from "react";
@@ -9,8 +8,9 @@ import ButtonLink from "../components/Buttons/ButtonLink";
 import Button from "../components/Buttons/Button";
 import { pinkColor, redColor } from "../styles/colors";
 import Messages from "../components/Messages/Messages";
-import { validateGameUri } from "../apiEndpoints";
+import { newGameUri, validateGameUri } from "../apiEndpoints";
 import { AuthContext } from "../AuthProvider";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Content = styled.div`
   display: flex;
@@ -40,20 +40,52 @@ const NewGameLink = styled(ButtonLink)`
 `;
 
 function Game() {
+  const [load, setLoad] = useState(0);
+  const [boardId, setBoardId] = useState(useParams().boardId);
   const { token } = useContext(AuthContext);
-  const { state } = useLocation();
-  const boardId = state.boardId;
-  const inicialMatrix = state.matrix;
-
-  const [errors, setErrors] = useState([]);
-  const [success, setSuccess] = useState("");
-  const [matrix, setMatrix] = useState(inicialMatrix);
+  const navigate = useNavigate();
+  const [inicialMatrix, setInicialMatrix] = useState([]);
+  const [matrix, setMatrix] = useState([]);
   const [modifiable, setModifiable] = useState();
+
   const [restarted, setRestarted] = useState(0);
   const [haveTime, setHaveTime] = useState(true);
-  const [isPaused, setPaused] = useState(false);
+  const [isPaused, setPaused] = useState(true);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const [errors, setErrors] = useState([]);
+  const [success, setSuccess] = useState("");
+
+  //get board
+  useEffect(() => {
+    (async () => {
+      try {
+        let gameUri = newGameUri;
+        if (boardId) {
+          gameUri = `${gameUri}/${boardId}`;
+        }
+        const response = await fetch(gameUri, {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        if (response.ok) {
+          console.log(data.id);
+          setInicialMatrix(JSON.parse(data.matrix));
+          setMatrix(JSON.parse(data.matrix));
+          setBoardId(data.id);
+          setPaused(false);
+        } else {
+          navigate("/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [load]);
 
   //timer
   useEffect(() => {
@@ -77,6 +109,8 @@ function Game() {
 
   //set modifiable fields
   useEffect(() => {
+    if (inicialMatrix.length == 0) return;
+
     const aux = [];
     inicialMatrix.forEach((row) => {
       const mRow = [];
@@ -90,10 +124,12 @@ function Game() {
       aux.push(mRow);
     });
     setModifiable(aux);
-  }, [restarted]);
+  }, [restarted, inicialMatrix]);
 
   //check if is completed
   useEffect(() => {
+    if (matrix.length == 0) return;
+
     let completed = true;
     matrix.forEach((row) => {
       row.forEach((number) => {
@@ -122,6 +158,7 @@ function Game() {
             completionTime: `00:${minutes}:${seconds}`,
           }),
         });
+
         const data = await response.json();
         if (response.ok) {
           setSuccess(data.success);
@@ -142,7 +179,7 @@ function Game() {
     return () => {
       abortController.abort();
     };
-  }, [matrix]);
+  }, [matrix, inicialMatrix]);
 
   function restartGame() {
     setMatrix(inicialMatrix);
@@ -165,22 +202,30 @@ function Game() {
     }
   }
 
+  function handleLoad() {
+    setBoardId();
+    setLoad(load + 1);
+    restartGame();
+  }
+
   return (
     <>
       <Nav />
       <Header>Jogo</Header>
       <Messages errors={errors} success={success} />
       <Content>
-        <Sudoku
-          setErrors={setErrors}
-          setSuccess={setSuccess}
-          setMatrix={setMatrix}
-          matrix={matrix}
-          boardId={boardId}
-          haveTime={haveTime}
-          handleChange={handleChange}
-          modifiable={modifiable}
-        />
+        {matrix.length > 0 && (
+          <Sudoku
+            setErrors={setErrors}
+            setSuccess={setSuccess}
+            setMatrix={setMatrix}
+            matrix={matrix}
+            boardId={boardId}
+            haveTime={haveTime}
+            handleChange={handleChange}
+            modifiable={modifiable}
+          />
+        )}
         <Container>
           <Timer minutes={minutes} seconds={seconds} />
           <RestartButton
@@ -190,7 +235,12 @@ function Game() {
           >
             Recomeçar
           </RestartButton>
-          <NewGameLink to={"/newgame"} $bg={redColor} $hoverbg={pinkColor}>
+          <NewGameLink
+            to={"/game"}
+            onClick={handleLoad}
+            $bg={redColor}
+            $hoverbg={pinkColor}
+          >
             Novo jogo aleatório
           </NewGameLink>
         </Container>

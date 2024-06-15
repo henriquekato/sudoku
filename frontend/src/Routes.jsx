@@ -2,7 +2,6 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Game from "./pages/Game";
-import NewGame from "./pages/NewGame";
 import Ranking from "./pages/Ranking";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
@@ -35,15 +34,7 @@ function Routes() {
           element: <Profile />,
         },
         {
-          path: "/newgame",
-          element: <NewGame />,
-        },
-        {
-          path: "/newgame/:boardId",
-          element: <NewGame />,
-        },
-        {
-          path: "/game",
+          path: "/game/:boardId?",
           element: <Game />,
         },
         {

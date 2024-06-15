@@ -72,13 +72,13 @@ function Home() {
           Meus jogos
         </HomeButtonLink>
         <GameSelectionDropdown text="Jogar">
-          <DropdownButtonLink to={"/newgame"} $hoverbg={"rgba(0, 0, 0, 0.2)"}>
+          <DropdownButtonLink to={"/game"} $hoverbg={"rgba(0, 0, 0, 0.2)"}>
             Aleatório
           </DropdownButtonLink>
           <DropdownButton
             $hoverbg={"rgba(0, 0, 0, 0.2)"}
             onClick={() => {
-              openModal("newgame");
+              openModal("game");
             }}
           >
             Escolher tabuleiro

@@ -70,7 +70,7 @@ function Ranking() {
         ))}
       </RankingList>
       <Container>
-        <PlayButtonLink to={`/newgame/${boardId}`}>
+        <PlayButtonLink to={`/game/${boardId}`}>
           Jogar tabuleiro {boardId}
         </PlayButtonLink>
       </Container>
