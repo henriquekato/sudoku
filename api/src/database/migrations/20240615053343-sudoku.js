@@ -17,8 +17,9 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
-      password: {
+      passwordHash: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -65,7 +66,7 @@ module.exports = {
         allowNull: false,
       },
       matrix: {
-        type: Sequelize.TEXT,
+        type: Sequelize.JSON,
         allowNull: false,
       },
       userId: {

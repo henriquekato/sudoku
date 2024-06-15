@@ -11,7 +11,7 @@ exports.signUp = async (req, res, next) => {
     await User.create({
       name: req.body.name,
       email: req.body.email,
-      password: User.createHashedPassword(req.body.password),
+      password: req.body.password,
     });
 
     res.status(201).json({

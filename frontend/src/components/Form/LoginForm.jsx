@@ -10,6 +10,7 @@ import FormField from "./FormField";
 import H2 from "../Headings/H2";
 import { jwtDecode } from "jwt-decode";
 import Button from "../Buttons/Button";
+import validator from "validator";
 
 function LoginForm(props) {
   const { setToken, setUserName } = useContext(AuthContext);
@@ -32,6 +33,15 @@ function LoginForm(props) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const errors = [];
+    if (!validator.isEmail(email))
+      errors.push("O endereço de e-mail não é válido.");
+    if (password.length < 4)
+      errors.push("Senha precisa ter pelo menos 4 caracteres");
+    if (errors.length > 0) {
+      props.setErrors(errors);
+      return;
+    }
 
     try {
       const options = {

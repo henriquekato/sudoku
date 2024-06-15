@@ -8,14 +8,14 @@ module.exports = {
       {
         name: "user1",
         email: "user1@email.com",
-        password: User.createHashedPassword("1234"),
+        passwordHash: User.createHashedPassword("1234"),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         name: "user2",
         email: "user2@email.com",
-        password: User.createHashedPassword("1234"),
+        passwordHash: User.createHashedPassword("1234"),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
