@@ -4,7 +4,11 @@ const cors = require("cors");
 const router = require("./routes");
 
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+  origin: "http://localhost:5173",
+};
+app.use(cors(corsOptions));
 app.use(router);
 
 const port = 8000;
