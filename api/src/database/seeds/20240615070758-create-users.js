@@ -5,15 +5,15 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("users", [
       {
-        name: "henrique",
-        email: "email@email.com",
+        name: "user1",
+        email: "user1@email.com",
         password: "1234",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         name: "user2",
-        email: "user@user.com",
+        email: "user2@email.com",
         password: "1234",
         createdAt: new Date(),
         updatedAt: new Date(),
