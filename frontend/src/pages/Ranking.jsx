@@ -26,6 +26,12 @@ const Container = styled.div`
   justify-content: center;
 `;
 
+const Paragraph = styled.p`
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+`;
+
 function Ranking() {
   const { token } = useContext(AuthContext);
   const { boardId } = useParams();
@@ -60,7 +66,7 @@ function Ranking() {
     <>
       <Nav />
       <Header>Ranking do tabuleiro {boardId}</Header>
-      <RankingList>
+      {games.length > 0 ? <RankingList>
         {games.map((game, index) => (
           <RankingItem key={game.id}>
             <div>{index + 1}º</div>
@@ -68,7 +74,7 @@ function Ranking() {
             <div>Tempo: {formattedTime(game.completionTime)}</div>
           </RankingItem>
         ))}
-      </RankingList>
+      </RankingList> : <Paragraph >Ainda não há registros desse tabuleiro</Paragraph>}
       <Container>
         <PlayButtonLink to={`/game/${boardId}`}>
           Jogar tabuleiro {boardId}

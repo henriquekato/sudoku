@@ -1,5 +1,5 @@
 import Header from "../components/Headings/Header";
-import LoginForm from "../components/Form/LoginForm";
+import SignupForm from "../components/Form/SignupForm";
 import Nav from "../components/Nav";
 import styled from "styled-components";
 import { useState } from "react";
@@ -13,7 +13,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-function Login() {
+function Signup() {
   const [errors, setErrors] = useState([]);
   const [success, setSuccess] = useState("");
 
@@ -23,11 +23,11 @@ function Login() {
       <Header>Sudoku</Header>
       <Messages errors={errors} success={success} />
       <Container>
-        <LoginForm setSuccess={setSuccess} setErrors={setErrors} />
-        <SwitchPageLink to={"/signup"}>Se cadastrar</SwitchPageLink>
+        <SignupForm setSuccess={setSuccess} setErrors={setErrors} />
+        <SwitchPageLink to={"/login"}>Fazer login</SwitchPageLink>
       </Container>
     </>
   );
 }
 
-export default Login;
+export default Signup;

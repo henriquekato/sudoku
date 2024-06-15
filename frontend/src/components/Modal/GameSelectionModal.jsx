@@ -1,17 +1,10 @@
 import { styled } from "styled-components";
 import ButtonLink from "../Buttons/ButtonLink";
-import {
-  blueColor,
-  lightBlueColor,
-  pinkColor,
-  redColor,
-  whiteColor,
-} from "../../styles/colors";
+import { blueColor, lightBlueColor, whiteColor } from "../../styles/colors";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider";
 import { allBoardsUri } from "../../apiEndpoints";
-import H2 from "../Headings/H2";
-import CloseButton from "./CloseButton";
+import ModalHeader from "./ModalHeader";
 import ModalBackdrop from "./ModalBackdrop";
 import ModalContent from "./ModalContent";
 
@@ -54,14 +47,7 @@ function GameSelectionModal(props) {
   return (
     <ModalBackdrop onClick={props.closeModal}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
-        <CloseButton
-          onClick={props.closeModal}
-          $bg={redColor}
-          $hoverbg={pinkColor}
-        >
-          X
-        </CloseButton>
-        <H2>Escolha o tabuleiro</H2>
+        <ModalHeader closeModal={props.closeModal} />
         <OptionContainer>
           {boards.map((board) => (
             <Option

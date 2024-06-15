@@ -1,4 +1,5 @@
 import Home from "./pages/Home";
+import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Game from "./pages/Game";
@@ -14,6 +15,10 @@ function Routes() {
   const { token } = useContext(AuthContext);
 
   const routesForNotAuthenticatedOnly = [
+    {
+      path: "/signup",
+      element: <Signup />,
+    },
     {
       path: "/login",
       element: <Login />,

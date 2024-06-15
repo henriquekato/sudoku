@@ -73,7 +73,6 @@ function Game() {
         });
         const data = await response.json();
         if (response.ok) {
-          console.log(data.id);
           setInicialMatrix(JSON.parse(data.matrix));
           setMatrix(JSON.parse(data.matrix));
           setBoardId(data.id);

@@ -34,6 +34,12 @@ const ProfileGame = styled(RankingItem)`
   }
 `;
 
+const Paragraph = styled.p`
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+`;
+
 function Profile() {
   const { token } = useContext(AuthContext);
 
@@ -67,7 +73,7 @@ function Profile() {
     <>
       <Nav />
       <Header>Seus jogos</Header>
-      <ProfileList>
+      {games.length > 0 ? <ProfileList>
         {games.map((game, index) => (
           <ProfileGame key={game.id}>
             <div>Jogo {index + 1}</div>
@@ -78,7 +84,7 @@ function Profile() {
             </PlayAgainButtonLink>
           </ProfileGame>
         ))}
-      </ProfileList>
+      </ProfileList> : <Paragraph>Você ainda não completou nenhum jogo</Paragraph>}
     </>
   );
 }
