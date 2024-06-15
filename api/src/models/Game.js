@@ -23,7 +23,7 @@ const Game = sequelize.define("game", {
     },
   },
   matrix: {
-    type: DataTypes.JSON,
+    type: DataTypes.TEXT,
     allowNull: false,
     primaryKey: false,
     validate: {

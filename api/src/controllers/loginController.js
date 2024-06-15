@@ -83,7 +83,7 @@ function generateToken(id, name) {
   const privateKey = fs.readFileSync("./src/keys/private.key", "utf-8");
   const token = jwt.sign({ id, name }, privateKey, {
     algorithm: "RS256",
-    expiresIn: 10800000,
+    expiresIn: 1800,
   });
   return token;
 }

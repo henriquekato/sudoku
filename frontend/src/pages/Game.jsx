@@ -73,8 +73,9 @@ function Game() {
         });
         const data = await response.json();
         if (response.ok) {
-          setInicialMatrix(JSON.parse(data.matrix));
-          setMatrix(JSON.parse(data.matrix));
+          const responseMatrix = JSON.parse(data.matrix);
+          setInicialMatrix(responseMatrix);
+          setMatrix(responseMatrix);
           setBoardId(data.id);
           setPaused(false);
         } else {

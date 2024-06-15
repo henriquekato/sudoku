@@ -11,7 +11,7 @@ const Board = sequelize.define("board", {
     primaryKey: true,
   },
   matrix: {
-    type: DataTypes.JSON,
+    type: DataTypes.TEXT,
     allowNull: false,
     primaryKey: false,
     validate: {
