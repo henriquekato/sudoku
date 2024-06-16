@@ -11,6 +11,7 @@ import Messages from "../components/Messages/Messages";
 import { newGameUri, validateGameUri } from "../apiEndpoints";
 import { AuthContext } from "../AuthProvider";
 import { useNavigate, useParams } from "react-router-dom";
+import verifySudoku from "../utils/verifySudoku";
 
 const Content = styled.div`
   display: flex;
@@ -48,6 +49,7 @@ function Game() {
   const [matrix, setMatrix] = useState([]);
   const [modifiable, setModifiable] = useState();
 
+  const [invalidPositionsMatrix, setInvalidPositionsMatrix] = useState([]);
   const [restarted, setRestarted] = useState(0);
   const [haveTime, setHaveTime] = useState(true);
   const [isPaused, setPaused] = useState(true);
@@ -129,17 +131,11 @@ function Game() {
   //check if is completed
   useEffect(() => {
     if (matrix.length == 0) return;
-
-    let completed = true;
-    matrix.forEach((row) => {
-      row.forEach((number) => {
-        if (!number) {
-          completed = false;
-          return;
-        }
-      });
-    });
-    if (!completed) return;
+    const invalidPositions = verifySudoku(matrix);
+    if (invalidPositions.length > 0) {
+      createInvalidPositionsMatrix(invalidPositions);
+      return;
+    }
     setPaused(true);
 
     const abortController = new AbortController();
@@ -166,10 +162,12 @@ function Game() {
           setModifiable((prevModifiable) =>
             prevModifiable.map((row) => row.map(() => false))
           );
+          setInvalidPositionsMatrix([]);
         } else {
           setSuccess("");
           setErrors(data.errors);
           setPaused(false);
+          createInvalidPositionsMatrix(data.invalidNumberPositions);
         }
       } catch (error) {
         console.log(error);
@@ -179,7 +177,7 @@ function Game() {
     return () => {
       abortController.abort();
     };
-  }, [matrix, inicialMatrix]);
+  }, [matrix]);
 
   function restartGame() {
     setMatrix(inicialMatrix);
@@ -190,6 +188,7 @@ function Game() {
     setErrors([]);
     setSuccess("");
     setRestarted(restarted + 1);
+    setInvalidPositionsMatrix([]);
   }
 
   function handleChange(value, row, column) {
@@ -208,6 +207,29 @@ function Game() {
     restartGame();
   }
 
+  function createInvalidPositionsMatrix(invalidNumberPositions) {
+    const auxMatrix = [];
+    let auxIndex = 0;
+    for (let i = 0; i < 9; i++) {
+      const auxRow = [];
+      for (let j = 0; j < 9; j++) {
+        if (auxIndex == invalidNumberPositions.length) {
+          auxRow.push(false);
+          continue;
+        }
+        const [row, column] = invalidNumberPositions[auxIndex];
+        if (row == i && column == j) {
+          auxRow.push(true);
+          auxIndex++;
+        } else {
+          auxRow.push(false);
+        }
+      }
+      auxMatrix.push(auxRow);
+    }
+    setInvalidPositionsMatrix(auxMatrix);
+  }
+
   return (
     <>
       <Nav />
@@ -224,6 +246,7 @@ function Game() {
             haveTime={haveTime}
             handleChange={handleChange}
             modifiable={modifiable}
+            invalidPositionsMatrix={invalidPositionsMatrix}
           />
         )}
         <Container>

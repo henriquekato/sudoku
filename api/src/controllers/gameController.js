@@ -91,6 +91,13 @@ exports.sudokuValidation = async (req, res, next) => {
 
     const invalidNumberPositions = game.validateCompletedSudoku();
     if (invalidNumberPositions.length != 0) {
+      invalidNumberPositions.sort(function (posA, posB) {
+        if (posA[0] == posB[0]) {
+          return posA[1] - posB[1];
+        }
+        return posA[0] - posB[0];
+      });
+
       return res.status(422).json({
         errors: [messages.errors.incorrectSudokuSolution],
         invalidNumberPositions,

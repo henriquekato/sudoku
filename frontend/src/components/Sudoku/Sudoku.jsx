@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Square from "./Square";
+import { darkColor, pinkColor, redColor } from "../../styles/colors";
 
 const StyledSudoku = styled.table`
   border-collapse: collapse;
@@ -31,9 +32,16 @@ const StyledTd = styled.td`
   text-align: center;
   border: 1px solid black;
   background-color: rgba(0, 0, 0, 0.1);
+  color: ${(props) => props.$color || darkColor};
+  font-weight: ${(props) => props.$color && 700};
 `;
 
 function Sudoku(props) {
+  function styleInvalidSquare(indexRow, indexColumn) {
+    if (props.invalidPositionsMatrix.length == 0) return false;
+    return props.invalidPositionsMatrix[indexRow][indexColumn];
+  }
+
   return (
     <>
       {props.modifiable && (
@@ -46,6 +54,10 @@ function Sudoku(props) {
                     return (
                       <StyledTd key={`${indexRow}${indexColumn}`}>
                         <Square
+                          $bg={
+                            styleInvalidSquare(indexRow, indexColumn) &&
+                            pinkColor
+                          }
                           value={value ? value : ""}
                           handleChange={props.handleChange}
                           row={indexRow}
@@ -55,7 +67,12 @@ function Sudoku(props) {
                     );
                   } else {
                     return (
-                      <StyledTd key={`${indexRow}${indexColumn}`}>
+                      <StyledTd
+                        key={`${indexRow}${indexColumn}`}
+                        $color={
+                          styleInvalidSquare(indexRow, indexColumn) && redColor
+                        }
+                      >
                         {value}
                       </StyledTd>
                     );

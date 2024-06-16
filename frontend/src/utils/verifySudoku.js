@@ -1,56 +1,4 @@
-const { DataTypes } = require("sequelize");
-
-const sequelize = require("../database/db");
-const Board = require("./Board");
-const User = require("./User");
-const messages = require("../locales/messages");
-
-const Game = sequelize.define("game", {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true,
-  },
-  completionTime: {
-    type: DataTypes.TIME,
-    allowNull: false,
-    primaryKey: false,
-    validate: {
-      notNull: {
-        msg: messages.errors.nullCompletionTime,
-      },
-    },
-  },
-  matrix: {
-    type: DataTypes.JSON,
-    allowNull: false,
-    primaryKey: false,
-    validate: {
-      is: {
-        args: /^\[\s*(\[(\s*\d\s*,\s*){8}\d\],*\s*){9}\s*\]$/,
-        msg: messages.errors.invalidSudokuBoard,
-      },
-    },
-  },
-});
-
-Game.belongsTo(User);
-Game.belongsTo(Board);
-
-Game.prototype.isBoardUnchanged = function (baseMatrix) {
-  const matrix = JSON.parse(this.matrix);
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      if (baseMatrix[i][j] == 0) continue;
-      if (matrix[i][j] != baseMatrix[i][j]) return false;
-    }
-  }
-  return true;
-};
-
-Game.prototype.validateCompletedSudoku = function () {
-  const matrix = JSON.parse(this.matrix);
+function verifySudoku(matrix) {
   const invalidPositions = [];
 
   function addIfUnique(positions) {
@@ -65,14 +13,21 @@ Game.prototype.validateCompletedSudoku = function () {
   }
 
   for (let i = 0; i < 9; i++) {
-    addIfUnique(this.verifyRow(i, matrix));
-    addIfUnique(this.verifyColumn(i, matrix));
-    addIfUnique(this.verifyQuadrant(i, matrix));
+    addIfUnique(verifyRow(i, matrix));
+    addIfUnique(verifyColumn(i, matrix));
+    addIfUnique(verifyQuadrant(i, matrix));
   }
-  return invalidPositions;
-};
 
-Game.prototype.verifyRow = function (row, matrix) {
+  invalidPositions.sort(function (posA, posB) {
+    if (posA[0] == posB[0]) {
+      return posA[1] - posB[1];
+    }
+    return posA[0] - posB[0];
+  });
+  return invalidPositions;
+}
+
+function verifyRow(row, matrix) {
   const seenNumbers = new Set();
   const invalids = [];
 
@@ -98,9 +53,9 @@ Game.prototype.verifyRow = function (row, matrix) {
     seenNumbers.add(currentNumber);
   }
   return invalids;
-};
+}
 
-Game.prototype.verifyColumn = function (column, matrix) {
+function verifyColumn(column, matrix) {
   const seenNumbers = new Set();
   const invalids = [];
 
@@ -126,9 +81,9 @@ Game.prototype.verifyColumn = function (column, matrix) {
     seenNumbers.add(currentNumber);
   }
   return invalids;
-};
+}
 
-Game.prototype.verifyQuadrant = function (quadrant, matrix) {
+function verifyQuadrant(quadrant, matrix) {
   let firstRow = Math.floor(quadrant / 3) * 3;
   let firstColumn = (quadrant * 3) % 9;
   const seenNumbers = new Set();
@@ -160,6 +115,6 @@ Game.prototype.verifyQuadrant = function (quadrant, matrix) {
     }
   }
   return invalids;
-};
+}
 
-module.exports = Game;
+export default verifySudoku;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { whiteColor } from "../../styles/colors";
 
 const StyledSquare = styled.input`
   width: 100%;
@@ -6,6 +7,9 @@ const StyledSquare = styled.input`
   text-align: center;
   font-size: 20px;
   outline: none;
+  background-color: ${(props) => props.$bg || whiteColor};
+  border: none;
+
   &:focus {
     border: 2px solid black;
   }
@@ -20,6 +24,7 @@ function Square(props) {
         const value = e.target.value;
         props.handleChange(value, props.row, props.column);
       }}
+      $bg={props.$bg || ""}
     />
   );
 }
