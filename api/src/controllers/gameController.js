@@ -89,6 +89,18 @@ exports.sudokuValidation = async (req, res, next) => {
         .json({ errors: [messages.errors.boardHasBeenChanged] });
     }
 
+    const [hours, minutes, seconds] = game.completionTime
+      .split(":")
+      .map(Number);
+    if (
+      hours > 1 ||
+      (hours === 1 && minutes > 0) ||
+      (hours === 1 && minutes === 0 && seconds > 0)
+    )
+      return res.status(422).json({
+        errors: [messages.errors.completionTimeIsGreaterThanOneHour],
+      });
+
     const invalidNumberPositions = game.validateCompletedSudoku();
     if (invalidNumberPositions.length != 0) {
       invalidNumberPositions.sort(function (posA, posB) {
