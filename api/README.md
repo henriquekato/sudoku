@@ -7,16 +7,6 @@ Disponibiliza e verifica sudokus
 - Nodejs
 - PostgreSQL
 
-## Database .env variables
-
-```
-HOST=localhost
-PORT=5432
-DATABASE=sudoku
-USER=user
-PASSWORD=passsword
-```
-
 ## Starting
 
 - Crie a database no PostgreSQL
@@ -26,6 +16,17 @@ PASSWORD=passsword
   ```
   cd sudoku/api
   npm i
+  ```
+
+- Crie um arquivo `.env` como no exemplo, alterando apenas o usuário e senha
+
+  ```
+  HOST=localhost
+  PORT=5432
+  DIALECT=postgres
+  DATABASE=sudoku
+  USER=user
+  PASSWORD=passsword
   ```
 
 - Crie o banco de dados com os seguintes comandos
