@@ -18,7 +18,7 @@ Disponibiliza e verifica sudokus
   npm i
   ```
 
-- Crie um arquivo `.env` como no exemplo, alterando apenas o usuário e senha
+- Crie um arquivo `.env` (na pasta `/api`) como no exemplo, com o seu usuário e senha:
 
   ```
   HOST=localhost
@@ -29,10 +29,14 @@ Disponibiliza e verifica sudokus
   PASSWORD=passsword
   ```
 
-- Crie o banco de dados com os seguintes comandos
-  - `npx sequelize-cli db:create`
-  - `npx sequelize-cli db:migrate`
-  - `npx sequelize-cli db:seed:all`
+- Crie o banco de dados com os seguintes comandos:
+
+  ```
+  npx sequelize-cli db:create
+  npx sequelize-cli db:migrate
+  npx sequelize-cli db:seed:all
+  ```
+
 - Inicie a API: `node server.js`, estará na porta 8000
 
 ## Rotas da API
