@@ -48,9 +48,8 @@ function Game() {
   const [inicialMatrix, setInicialMatrix] = useState([]);
   const [matrix, setMatrix] = useState([]);
   const [modifiable, setModifiable] = useState();
-
   const [invalidPositionsMatrix, setInvalidPositionsMatrix] = useState([]);
-  const [restarted, setRestarted] = useState(0);
+  const [restart, setRestart] = useState(0);
   const [haveTime, setHaveTime] = useState(true);
   const [isPaused, setPaused] = useState(true);
   const [minutes, setMinutes] = useState(0);
@@ -126,7 +125,7 @@ function Game() {
       aux.push(mRow);
     });
     setModifiable(aux);
-  }, [restarted, inicialMatrix]);
+  }, [restart, inicialMatrix]);
 
   //check if is completed
   useEffect(() => {
@@ -187,8 +186,7 @@ function Game() {
     setMinutes(0);
     setErrors([]);
     setSuccess("");
-    setRestarted(restarted + 1);
-    setInvalidPositionsMatrix([]);
+    setRestart(restart + 1);
   }
 
   function handleChange(value, row, column) {
