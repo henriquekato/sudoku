@@ -73,7 +73,7 @@ function Sudoku(props) {
                           styleInvalidSquare(indexRow, indexColumn) && redColor
                         }
                       >
-                        {value}
+                        {value ? value : ""}
                       </StyledTd>
                     );
                   }

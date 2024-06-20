@@ -100,13 +100,26 @@ function Game() {
         setMinutes(minutes + 1);
       }
       if (minutes == 59 && seconds == 59) {
-        setTime(!haveTime);
+        setHaveTime(!haveTime);
         setErrors(["Você não cumpriu o jogo em 1 hora, tente recomeçar."]);
+        setModifiable(createMatrixOfFalse);
       }
     }, 1000);
 
     return () => clearInterval(incrementTime);
   }, [seconds, haveTime, isPaused]);
+
+  function createMatrixOfFalse() {
+    const aux = [];
+    for (let i = 0; i < 9; i++) {
+      const row = [];
+      for (let j = 0; j < 9; j++) {
+        row.push(false);
+      }
+      aux.push(row);
+    }
+    return aux;
+  }
 
   //set modifiable fields
   useEffect(() => {
