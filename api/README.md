@@ -13,6 +13,7 @@ Disponibiliza e verifica sudokus
 
 - Crie a database no PostgreSQL
 - Coloque suas chaves pública ( `public.key` ) e privada ( `private.key` ) em `/api/keys`
+  - chaves RSA, com no mínimo 4096 caracteres
 - Instale as dependências da API
 
   ```
