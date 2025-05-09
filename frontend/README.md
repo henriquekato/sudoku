@@ -4,6 +4,8 @@ Interface do site para jogar sudokus
 
 ## Starting
 
+### Sem docker
+
 - Inicie a API
 - Instale as dependências da API
   ```
@@ -11,6 +13,14 @@ Interface do site para jogar sudokus
   npm i
   ```
 - Rode o projeto: `npm run dev`, estará na porta 5173
+
+### Com docker
+
+```
+docker build -t imgfrontend .
+docker run -d --name frontend --network sudoku -p 3000:3000 imgfrontend
+```
+- O projeto estará na porta 3000
 
 ## Rotas do site
 
