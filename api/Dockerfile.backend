@@ -1,0 +1,14 @@
+FROM node:20
+WORKDIR /app
+COPY . .
+RUN npm install
+
+ENV DB_HOST=host.docker.internal
+ENV DB_PORT=5432
+ENV DB_DIALECT=postgres
+ENV DB_DATABASE=sudoku
+ENV DB_USER=user
+ENV DB_PASSWORD=password
+
+EXPOSE 8000
+CMD ["sh", "-c", "npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --env development && node server.js"]

@@ -9,6 +9,8 @@ Disponibiliza e verifica sudokus
 
 ## Starting
 
+### Sem docker
+
 - Crie a database no PostgreSQL
 - Coloque suas chaves pública ( `public.key` ) e privada ( `private.key` ) em `/api/keys`
 - Instale as dependências da API
@@ -38,6 +40,18 @@ Disponibiliza e verifica sudokus
   ```
 
 - Inicie a API: `node server.js`, estará na porta 8000
+
+### Com docker
+
+```
+docker network create sudoku
+
+docker build -f .\Dockerfile.database -t imgbanco .
+docker run -d --name banco --network sudoku -p 5432:5432 imgbanco
+
+docker build -f .\Dockerfile.backend -t imgbackend .
+docker run -d --name backend --network sudoku -p 8000:8000 imgbackend
+```
 
 ## Rotas da API
 
