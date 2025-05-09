@@ -44,9 +44,13 @@ Disponibiliza e verifica sudokus
 
 ### Com docker
 
+Criar network se não estiver criado
 ```
 docker network create sudoku
+```
 
+Criar imagens e containers
+```
 docker build -f .\Dockerfile.database -t imgbanco .
 docker run -d --name banco --network sudoku -p 5432:5432 imgbanco
 

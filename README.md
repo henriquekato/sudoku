@@ -20,6 +20,7 @@ git clone https://github.com/henriquekato/sudoku.git
 
 ## Com docker
 
+Criar network
 ```
 docker network create sudoku
 ```

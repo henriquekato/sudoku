@@ -1,6 +1,5 @@
 FROM postgres:17.4-alpine
 
-ENV POSTGRES_DB=sudoku
 ENV POSTGRES_USER=user
 ENV POSTGRES_PASSWORD=password
 
